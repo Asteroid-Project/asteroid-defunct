@@ -2,11 +2,15 @@
 
 # print an info message (in red)
 info() {
-    echo -e "\e[31m[INFO] $1\e[0m"
+    echo -e "\e[34m[INFO] $1\e[0m"
 }
 
 warn() {
     echo -e "\e[33m[WARN] $1\e[0m"
+}
+
+error() {
+    echo -e "\e[31m[FAIL] $1\e[0m"
 }
 
 if [ "x$DEVICE" = "x" ]; then
@@ -36,13 +40,19 @@ clean_all() {
     for i in `get_device_packages ramdisk`; do
         clear_vars
         source $i
-        clean_package $PACKAGE_NAME
+
+        if [ "x$PACKAGE_NAME" != "x" ]; then
+            clean_package $PACKAGE_NAME
+        fi
     done
 
     for i in `get_device_packages`; do
         clear_vars
         source $i
-        clean_package $PACKAGE_NAME
+
+        if [ "x$PACKAGE_NAME" != "x" ]; then
+            clean_package $PACKAGE_NAME
+        fi
     done
 
     echo "Removing installation directories..."
@@ -70,6 +80,45 @@ setup_device() {
     export ARCH=`echo $DEVICE_ARCH | cut -d ':' -f 1`
     export CC="$DEVICE_ARCH-gcc"
     export DEVICE_ARCH
+
+    setup_toolchain
+}
+
+# setup the cross-compilation toolchain by adding it to the PATH
+# the toolchain must be installed in toolchain/$DEVICE_ARCH, for example
+# toolchain/arm-linux-gnueabihf. If such a toolchain is not available,
+# this script will try to download it at the URL specified in toolchains.mk
+setup_toolchain() {
+    cd $ASTEROID/toolchain
+
+    if [ ! -e "$DEVICE_ARCH" ]; then
+        source toolchains.mk
+        VAR=TOOLCHAIN_`echo $DEVICE_ARCH | tr a-z A-Z | tr - _`
+        TOOLCHAIN_URL=${!VAR}
+
+        if [ "x$TOOLCHAIN_URL" = "x" ]; then
+            echo "No toolchain provided for $DEVICE_ARCH, and no URL" \
+                "provided in toolchains.mk"
+            echo "Could not find a working toolchain."
+            exit 1
+        fi
+
+        ARCHIVE=`basename $TOOLCHAIN_URL`
+        cd $ASTEROID/.tmp
+
+        if [ ! -e $ARCHIVE ]; then
+            run_check "wget $TOOLCHAIN_URL -O $ARCHIVE --timeout=10" \
+                "failed to get the toolchain for $DEVICE_ARCH"
+        fi
+
+        mkdir -pv $ASTEROID/toolchain/$DEVICE_ARCH
+        cd $ASTEROID/toolchain/$DEVICE_ARCH
+
+        run_check "tar xf $ASTEROID/.tmp/$ARCHIVE --strip-components=1"
+        info "toolchain for $DEVICE_ARCH installed"
+    fi
+
+    export PATH=$ASTEROID/toolchain/$DEVICE_ARCH/bin:$PATH
 }
 
 # check that the package provides the minimum
@@ -77,7 +126,7 @@ setup_device() {
 check_required_vars() {
     for var in `echo "PACKAGE_NAME PACKAGE_VERSION PACKAGE_URL"`; do
         if [ "x${!var}" = "x" ]; then
-            echo "Error: Required variable $var not set in $1"
+            error "Required variable $var not set in $1"
             exit 1
         fi
     done
@@ -105,7 +154,7 @@ clear_vars() {
 # detailed message
 check_ret_with_err() {
     if [ $? -ne 0 ]; then
-        echo Error: "$1"
+        error "$1"
         
         if [ "x$2" != "x" ]; then
             echo "$2"
@@ -209,6 +258,10 @@ get_device_packages() {
     for i in `ls $ASTEROID/build/{common,$DEVICE}/*.mk 2>/dev/null`; do
         # rd-*.mk files are for the ramdisk, so skin them unless 
         # the caller asked for them
+        if [ "$i" == "$ASTEROID/build/$DEVICE/main.mk" ]; then
+            continue
+        fi
+
         if [[ $i == $ASTEROID/build/common/rd-*.mk ]]; then
             if [[ "x$1" != "x" ]]; then
                 echo "$i"
