@@ -314,11 +314,11 @@ build_rootdir() {
 # to reduce the size of the final system
 strip_install() {
     cd $ASTEROID/ramdisk/bin
-    find . -exec strip {} \;
+    find . -exec $DEVICE_ARCH-strip {} \;
 
     cd $ASTEROID/rootdir/system
-    find bin/ -exec strip {} \;
-    find lib/ -exec strip {} \;
+    find bin/ -exec $DEVICE_ARCH-strip {} \;
+    find lib/ -exec $DEVICE_ARCH-strip {} \;
 }
 
 # start with a clean log
