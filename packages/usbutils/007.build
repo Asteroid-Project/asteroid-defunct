@@ -1,0 +1,3 @@
+PACKAGE_URL=https://www.kernel.org/pub/linux/utils/usb/usbutils/usbutils-007.tar.xz
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% LIBS=-ludev

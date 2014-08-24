@@ -1,0 +1,6 @@
+SCRIPT=cd %RAMDISK_DIR%
+ find . -exec %TARGET%-strip {} \;
+
+ cd %DESTDIR%/%PREFIX%
+ find bin/ -exec %TARGET%-strip {} \;
+ find lib/ -exec %TARGET%-strip {} \;

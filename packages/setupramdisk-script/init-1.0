@@ -1,0 +1,67 @@
+#!/bin/sh
+# initramfs init script for Asteroid
+
+# Early init
+/bin/busybox --install -s /bin
+export PATH=/bin
+
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs none /dev
+
+# Shows the splashscreen
+cat /bootsplash > /dev/fb0
+
+# Init some system variables
+/bin/echo -n 8192  > /proc/sys/fs/file-max
+/bin/echo -n 256   > /proc/sys/kernel/threads-max
+/bin/echo -n 1     > /proc/sys/vm/swappiness
+/bin/echo -n 5     > /proc/sys/vm/page-cluster
+/bin/echo -n 500   > /proc/sys/vm/dirty_expire_centisecs
+/bin/echo -n 60    > /proc/sys/vm/dirty_background_ratio
+/bin/echo -n 65536 > /proc/sys/net/core/rmem_default
+/bin/echo -n 16384 > /proc/sys/net/core/wmem_default
+
+# Init an Ethernet USB interface if there is one
+if [ -d "/sys/class/android_usb/android0/" ]; then
+    SERIAL=$(grep 'Serial' /proc/cpuinfo | awk '{print $3}')
+    echo -n 0        > /sys/class/android_usb/android0/enable
+    echo -n DEAD     > /sys/class/android_usb/android0/idVendor
+    echo -n BEAF     > /sys/class/android_usb/android0/idProduct
+    echo -n Asteroid > /sys/class/android_usb/android0/iManufacturer
+    echo -n Boot     > /sys/class/android_usb/android0/iProduct
+    echo -n $SERIAL  > /sys/class/android_usb/android0/iSerial
+    echo -n rndis    > /sys/class/android_usb/android0/functions
+    echo -n 1        > /sys/class/android_usb/android0/enable
+
+    ifconfig usb0   192.168.2.1
+    ifconfig rndis0 192.168.2.1
+
+    mkdir /etc
+    echo start 192.168.2.20             >> /etc/udhcpd.conf
+    echo end 192.168.2.90               >> /etc/udhcpd.conf
+    echo lease_file /var/udhcpd.leases  >> /etc/udhcpd.conf
+    echo interface ndis0                >> /etc/udhcpd.conf
+
+    udhcpd
+fi
+
+# mount rootfs
+mkdir /mnt
+mount -t ext4 /dev/mtdblock0 /mnt
+
+if [ $? -ne 0 ]; then
+    echo "Mounting the root partition failed." >> /dev/console
+    echo "Redirecting you to a rescue shell..." >> /dev/console
+    exec getty -n -l /bin/sh 9600 /dev/console
+fi
+
+# mounting rootfs succeeded, switch root to the root disk
+mkdir -p /mnt/dev /mnt/proc /mnt/sys
+mount --move /proc /mnt/proc
+mount --move /sys /mnt/sys
+mount --move /dev /mnt/dev
+
+export LD_LIBRARY_PATH=/asteroid/lib/
+exec switch_root -c /dev/ttyS2 /mnt /asteroid/bin/init
+

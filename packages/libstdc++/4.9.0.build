@@ -1,0 +1,11 @@
+PACKAGE_URL=http://ftp.gnu.org/gnu/gcc/gcc-4.9.0/gcc-4.9.0.tar.bz2
+
+CONFIGURE_COMMANDS=mkdir build
+ cd build
+ ../libstdc++-v3/configure %CONFIGURE_OPTIONS% --disable-multilib --disable-nls
+
+BUILD_COMMANDS=cd build
+ make %MAKE_OPTIONS%
+
+INSTALL_COMMANDS=cd build
+ make install

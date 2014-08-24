@@ -1,0 +1,4 @@
+PACKAGE_URL=http://placeholder.fr/~kido/ext4_utils.tar.gz
+HOST_BUILD=true
+CONFIGURE_COMMANDS=
+INSTALL_COMMANDS=cp make_ext4fs test_ext4fixup %PREFIX%/bin/

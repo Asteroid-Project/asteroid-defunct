@@ -1,0 +1,4 @@
+PACKAGE_URL=http://placeholder.fr/~leo/cloog-0.18.0.tar.gz
+HOST_BUILD=true
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --with-isl=system --disable-static

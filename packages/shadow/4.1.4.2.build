@@ -1,0 +1,5 @@
+PACKAGE_URL=http://pkg-shadow.alioth.debian.org/releases/shadow-4.1.4.2.tar.bz2
+# Version 4.2 has issue cross compiling.
+
+CONFIGURE_COMMANDS=echo "ac_cv_func_setpgrp_void=yes" > config.cache
+ ./configure %CONFIGURE_OPTIONS% --config-cache

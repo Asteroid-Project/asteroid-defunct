@@ -1,0 +1,8 @@
+PACKAGE_URL=https://github.com/tinyalsa/tinyalsa.git
+
+CONFIGURE_COMMANDS=
+
+BUILD_COMMANDS=make CROSS_COMPILE=%TARGET%- %MAKE_OPTIONS%
+
+INSTALL_COMMANDS=cp tinycap tinymix tinypcminfo tinyplay %DESTDIR%/%PREFIX%/bin
+ cp libtinyalsa.so %DESTDIR%/%PREFIX%/lib

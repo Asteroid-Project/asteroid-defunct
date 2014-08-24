@@ -1,0 +1,4 @@
+PACKAGE_URL=http://placeholder.fr/~leo/isl-0.11.1.tar.bz2
+HOST_BUILD=true
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --disable-static

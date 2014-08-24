@@ -1,0 +1,11 @@
+SCRIPT=\
+    cd %ROOTDIR_DIR%
+    mkdir -p asteroid/bin asteroid/etc asteroid/include asteroid/lib asteroid/libexec asteroid/sbin asteroid/share asteroid/var users/root dev proc sys
+    ln -sf asteroid/etc etc
+    ln -sf asteroid/lib lib
+    ln -sf asteroid/bin bin
+    echo root::0:0:root:/users/root:/asteroid/bin/bash > etc/passwd
+    echo \#!/asteroid/bin/bash > asteroid/bin/init
+    echo export PATH=/asteroid/bin >> asteroid/bin/init
+    echo busybox getty -n -l /asteroid/bin/bash 9600 /dev/ttyS2 >> asteroid/bin/init
+    chmod +x asteroid/bin/init

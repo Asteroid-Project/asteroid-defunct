@@ -1,0 +1,352 @@
+#!/usr/bin/env python
+import os.path
+import re
+import subprocess
+import StringIO
+import ConfigParser
+import multiprocessing
+import sys
+import shutil
+from optparse import OptionParser
+
+def main():
+    checkDeps()
+    optionsParsing()
+    printGeneralInfos()
+
+    if options.clean:
+        clean()
+    elif options.ultra_clean:
+        ultraClean()
+    else:
+        build()
+
+def checkDeps():
+    libList = ["libffi", "expat", "alsa", "esound", "libpulse", "gl", "udev", "luajit"]
+    missingDevPkgs = []
+    for lib in libList:
+        if subprocess.call(["pkg-config", "--exists", lib]):
+            missingDevPkgs.append(lib)
+    if len(missingDevPkgs) > 0: 
+        error("Building Asteroid requires the following librairies development headers: " + ", ".join(missingDevPkgs))
+
+    path = os.getenv('PATH')
+    cmdList = ["wget", "git", "gcc", "make", "gawk", "autoconf", "bison", "flex", "cmake", "libtool", "glib-genmarshal",
+               "gperf", "intltool-extract", "autopoint", "wayland-scanner", "autoconf", "make"]
+    missingCmds = []
+    for cmd in cmdList:
+        if subprocess.call(["which", cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE):
+            missingCmds.append(cmd)
+    if len(missingCmds) > 0: 
+        error("Building Asteroid requires the following commands: " + ", ".join(missingCmds))
+
+def optionsParsing():
+    parser = OptionParser(usage="usage: %prog [options]", version="Asteroid building script. Version 0.1")
+    parser.add_option("-v", "--verbose", action="store_true", dest="verbose", default=False, help="shows a lot of infos about what the script is doing")
+    parser.add_option("--recipe", action="store", dest="recipe", default="current", help="specifies the recipe to build")
+    parser.add_option("--device", action="store", dest="device", default="default", help="specifies the device to build for (a directory in devices/)")
+    parser.add_option("--device-version", action="store", dest="device_version", default="default", help="specifies the version of the device recipe to use")
+    parser.add_option("--target", action="store", dest="target", default="arm-linux-gnueabihf", help="specifies the target's triplet, the default is: arm-linux-gnueabihf")
+    parser.add_option("--only", action="store", dest="only", default=[], type=str, help="build only the specified packages in the recipe")
+    parser.add_option("--skip", action="store", dest="skip", default=[], type=str, help="build every packages of the recipe else than the specified ones")
+    parser.add_option("--clean", action="store_true", dest="clean", default=False, help="clean every source code's tree (usually runs make clean)")
+    parser.add_option("--ultra-clean", action="store_true", dest="ultra_clean", default=False, help="removes every source codes and logs")
+    parser.add_option("--download-only", action="store_true", dest="download_only", default=False, help="don't build the downloaded packages")
+    parser.add_option("--rebuild", action="store", dest="rebuild", default=[], type=str, help="ignores the fact that the specified packages were already built")
+    global options
+    (options, args) = parser.parse_args()
+
+    if options.only != [] and options.skip != []:
+        error("You can't use --only and --skip at the same time.") 
+    if not os.path.isfile("recipes/" + options.recipe + ".recipe"):
+        error("Recipe file : " + "recipes/" + options.recipe + ".recipe" +  " doesn't exist, check the name.")
+    if not os.path.isfile("devices/" + options.device + "/" + options.device_version + ".recipe"):
+        error("Device's recipe file : devices/" + options.device + "/" + options.device_version + ".recipe doesn't exist, check the name and version.")
+
+    global buildRoot
+    buildRoot = os.getcwd()
+    os.environ["PATH"] += os.pathsep + buildRoot + "/output/hosttools/bin/"
+    os.environ["LD_LIBRARY_PATH"] = buildRoot + "/output/hosttools/lib/"
+
+def readlink(path):
+    if os.path.islink(path):
+        return os.path.splitext(os.path.basename(os.readlink(path)))[0]
+    else:
+        return path
+
+def printGeneralInfos():
+    options.recipe = readlink("recipes/" + options.recipe + ".recipe")
+    options.device = readlink("devices/" + options.device)
+    options.device_version = readlink("devices/" + options.device + "/" + options.device_version + ".recipe")
+
+    info("==== Asteroid Build System ====")
+    info("Building Asteroid " + options.recipe + " for " + options.device + " " + options.device_version + " with " + options.target)
+
+# Clean source code and remove logs
+def clean():
+    with open("devices/" + options.device + "/" + options.device_version + ".recipe") as f:
+        for line in f:
+            pkgName = line.rstrip().split("/")[0]
+            if pkgName != "Asteroid":
+                pkgVersion = ""
+                pkgVersion = line.rstrip().split(" ")[0].split("/")[1]
+                pkgTarget = "main"
+                if len(line.rstrip().split(" ")) > 1:
+                    pkgTarget = line.rstrip().split(" ")[1]
+
+                if (options.skip != [] and not pkgName in options.skip) or (options.only != [] and pkgName in options.only) or (options.only == options.skip == []):
+                    cleanPkg("devices/" + options.device + "/packages/"  + pkgName + "/" + pkgVersion + ".build", pkgTarget)
+
+    with open("recipes/" + options.recipe + ".recipe") as f:
+        for line in f:
+            pkgName = line.rstrip().split("/")[0]
+            pkgVersion = ""
+            pkgVersion = line.rstrip().split(" ")[0].split("/")[1]
+            pkgTarget = "main"
+            if len(line.rstrip().split(" ")) > 1:
+                pkgTarget = line.rstrip().split(" ")[1]
+
+            if (options.skip != [] and not pkgName in options.skip) or (options.only != [] and pkgName in options.only) or (options.only == options.skip == []):
+                cleanPkg("packages/" + pkgName + "/" + pkgVersion + ".build", pkgTarget)
+
+    info("==== Asteroid succefully cleaned ====")
+
+def cleanPkg(path, target):
+    logPath = path + ".log"
+    if target != "main":
+        logPath = path + "-" + target + ".log"
+    finishedPath = logPath + ".finished"
+
+    if not os.path.isfile(path):
+        error("Package's build file : " +  path + " doesn't exist.")
+    warn("Cleaning package : " + path)
+
+    if os.path.isfile(finishedPath):
+        os.remove(finishedPath)
+    if os.path.isfile(logPath):
+        os.remove(logPath)
+    
+    values = parseFile(path, target)
+    version = os.path.splitext(os.path.basename(path))[0]
+
+    if os.path.isdir(os.path.dirname(os.path.realpath(path)) + "/" + version) and not "SCRIPT" in values:
+        savedPath = os.getcwd()
+        os.chdir(os.path.dirname(os.path.realpath(path)) + "/" + version)
+        runCmd(values.get("CLEAN_COMMANDS", "make clean"))
+        os.chdir(savedPath)
+
+# Removes source code and logs
+def ultraClean():
+    with open("devices/" + options.device + "/" + options.device_version + ".recipe") as f:
+        for line in f:
+            pkgName = line.rstrip().split("/")[0]
+            if pkgName != "Asteroid":
+                pkgVersion = ""
+                pkgVersion = line.rstrip().split(" ")[0].split("/")[1]
+                pkgTarget = "main"
+                if len(line.rstrip().split(" ")) > 1:
+                    pkgTarget = line.rstrip().split(" ")[1]
+
+                if (options.skip != [] and not pkgName in options.skip) or (options.only != [] and pkgName in options.only) or (options.only == options.skip == []):
+                    ultraCleanPkg("devices/" + options.device + "/packages/"  + pkgName + "/" + pkgVersion + ".build", pkgTarget)
+
+    with open("recipes/" + options.recipe + ".recipe") as f:
+        for line in f:
+            pkgName = line.rstrip().split("/")[0]
+            pkgVersion = ""
+            pkgVersion = line.rstrip().split(" ")[0].split("/")[1]
+            pkgTarget = "main"
+            if len(line.rstrip().split(" ")) > 1:
+                pkgTarget = line.rstrip().split(" ")[1]
+
+            if (options.skip != [] and not pkgName in options.skip) or (options.only != [] and pkgName in options.only) or (options.only == options.skip == []):
+                ultraCleanPkg("packages" + pkgName + "/" + pkgVersion + ".build", pkgTarget)
+
+    info("==== Asteroid succefully ultra cleaned ====")
+
+def ultraCleanPkg(path, target):
+    logPath = path + ".log"
+    if target != "main":
+        logPath = path + "-" + target + ".log"
+    finishedPath = logPath + ".finished"
+
+    warn("Ultra-cleaning package : " + path)
+    if os.path.isfile(finishedPath):
+        os.remove(finishedPath)
+    if os.path.isfile(logPath):
+        os.remove(logPath)
+    if os.path.isdir(os.path.dirname(os.path.realpath(path)) + "/" + os.path.splitext(os.path.basename(path))[0]):
+        shutil.rmtree(os.path.dirname(os.path.realpath(path)) + "/" + os.path.splitext(os.path.basename(path))[0])
+
+def build():
+    with open("devices/" + options.device + "/" + options.device_version + ".recipe") as f:
+        for line in f:
+            pkgName = line.rstrip().split("/")[0]
+            if pkgName == "Asteroid":
+                with open("recipes/" + options.recipe + ".recipe") as f:
+                    for line in f:
+                        pkgName = line.rstrip().split("/")[0]
+                        pkgVersion = line.rstrip().split(" ")[0].split("/")[1]
+                        pkgTarget = "main"
+                        if len(line.rstrip().split(" ")) > 1:
+                            pkgTarget = line.rstrip().split(" ")[1]
+                        if (options.skip != [] and not pkgName in options.skip) or (options.only != [] and pkgName in options.only) or (options.only == options.skip == []):
+                            buildPkg("packages/" + pkgName + "/" + pkgVersion + ".build", pkgName, pkgTarget)
+            else:
+                pkgVersion = line.rstrip().split(" ")[0].split("/")[1]
+                pkgTarget = "main"
+                if len(line.rstrip().split(" ")) > 1:
+                    pkgTarget = line.rstrip().split(" ")[1]
+
+                if (options.skip != [] and not pkgName in options.skip) or (options.only != [] and pkgName in options.only) or (options.only == options.skip == []):
+                    buildPkg("devices/" + options.device + "/packages/" + pkgName + "/" + pkgVersion + ".build", pkgName, pkgTarget)
+
+    info("==== Asteroid succefully built ====")
+
+# If needed, this function downloads, builds and installs a package
+def buildPkg(path, pkgName, target):
+    if not os.path.isfile(path):
+        error("Package's build file: " +  path + " doesn't exist.")
+    logPath = path + ".log"
+    if target != "main":
+        logPath = path + "-" + target + ".log"
+    finishedPath = logPath + ".finished"
+    values = parseFile(path, target)
+    if os.path.isfile(finishedPath) and "REBUILD" not in values and pkgName not in options.rebuild:
+        if target == "main":
+            warn("Skipping already built package: " + path)
+        else:
+            warn("Skipping already built package: " + path + " " + target)
+        return
+    if target == "main":
+        warn("Building package: " + path)
+    else:
+        warn("Building package: " + path + " " + target)
+
+    if os.path.isfile(logPath):
+        os.remove(logPath)
+
+    savedPath = os.getcwd()
+    os.chdir(os.path.dirname(os.path.realpath(path)))
+    
+    if "SCRIPT" in values:
+        toggleHostBuild(False)
+        runCmd(sanitize(values.get("SCRIPT")), savedPath + "/" + logPath)
+    else:
+        version = os.path.splitext(os.path.basename(path))[0]
+        if not os.path.isdir(version):
+            main = parseFile(buildRoot + '/' + path, "main")
+            if "GIT_OPTIONS" in values:
+                download(main.get("PACKAGE_URL"), version, main.get("GIT_OPTIONS"))
+            else:
+                download(main.get("PACKAGE_URL"), version)
+        os.chdir(version)
+        if not options.download_only:
+            toggleHostBuild("HOST_BUILD" in values)
+            runCmd(sanitize(values.get("CONFIGURE_COMMANDS", "./configure %CONFIGURE_OPTIONS%")), savedPath + "/" + logPath)
+            runCmd(sanitize(values.get("BUILD_COMMANDS", "make %MAKE_OPTIONS%")), savedPath + "/" + logPath)
+            runCmd(sanitize(values.get("INSTALL_COMMANDS", "make install DESTDIR=%DESTDIR%")), savedPath + "/" + logPath)
+    os.chdir(savedPath)
+    if not options.download_only:
+        open(finishedPath, "w").close() 
+
+def toggleHostBuild(toggle):
+    global buildVars
+    buildVars = {}
+    buildVars["%RECIPE%"] = options.recipe
+    buildVars["%DEVICE%"] = options.device
+    buildVars["%DEVICE_VERSION%"] = options.device_version
+    buildVars["%TARGET%"] = options.target
+    buildVars["%MAKE_OPTIONS%"] = "-j" + str(multiprocessing.cpu_count())
+    buildVars["%HOST_CPU_COUNT%"] = str(multiprocessing.cpu_count())
+    buildVars["%HOSTTOOLS_DIR%"] = buildRoot + "/output/hosttools"
+    buildVars["%ROOTDIR_DIR%"] = buildRoot + "/output/rootdir"
+    buildVars["%RAMDISK_DIR%"] = buildRoot + "/output/ramdisk"
+    buildVars["%OUTPUT_DIR%"] = buildRoot + "/output"
+    if (toggle):
+        os.environ["CFLAGS"] = "-I" + buildRoot + "/output/hosttools/include"
+        os.environ["CXXFLAGS"] = "-I" + buildRoot + "/output/hosttools/include"
+        os.environ["LDFLAGS"] = "-L" + buildRoot + "/output/hosttools/lib"
+        os.environ["PKG_CONFIG_PATH"] = buildRoot + "/output/hosttools/lib/pkgconfig"
+        os.environ["PKG_CONFIG_LIBDIR"] = ""
+        os.environ["PKG_CONFIG_SYSROOT_DIR"] = ""
+        buildVars["%CONFIGURE_OPTIONS%"] = "--prefix=" + buildRoot + "/output/hosttools"
+        buildVars["%PREFIX%"] = buildRoot + "/output/hosttools"
+        buildVars["%DESTDIR%"] = ""
+    else:
+        os.environ["CFLAGS"] = ""
+        os.environ["CXXFLAGS"] = ""
+        os.environ["LDFLAGS"] = ""
+        os.environ["PKG_CONFIG_PATH"] = ""
+        os.environ["PKG_CONFIG_LIBDIR"] = buildRoot + "/output/rootdir/asteroid/lib/pkgconfig"
+        os.environ["PKG_CONFIG_SYSROOT_DIR"] = buildRoot + "/output/rootdir"
+        buildVars["%CONFIGURE_OPTIONS%"] = "--prefix=/asteroid/ --host=" + options.target + " --with-sysroot=" + buildRoot + "/output/rootdir"
+        buildVars["%PREFIX%"] = "/asteroid"
+        buildVars["%DESTDIR%"] = buildRoot + "/output/rootdir"
+
+def download(url, dest, gitopt=""):
+    if url.startswith("git://") or url.endswith(".git") or url.endswith(".git/"):
+        runCmd("git clone " + gitopt + " " + url + " " + dest)
+    else:
+        runCmd("wget -c " + url)
+        runCmd("mkdir " + dest)
+        if os.path.basename(url).endswith(".zip"):
+            runCmd("unzip " + os.path.basename(url) + " -d " + dest)
+            files = os.listdir(dest)
+            if len(files) == 1:
+                for item in os.listdir(dest + "/" + files[0]):
+                    s = dest + "/" + files[0] + "/" + item
+                    d = dest + "/" + item
+                    if os.path.isdir(s):
+                        shutil.copytree(s, d)
+                    else:
+                        shutil.copy2(s, d)
+                shutil.rmtree(dest + "/" + files[0])
+        else:
+            runCmd("tar xf " + os.path.basename(url) + " --strip-components=1 -C " + dest)
+        runCmd("rm " + os.path.basename(url))
+
+def runCmd(cmd, logpath="/dev/null"):
+    logfile = open(logpath, "a")
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    while True:
+        line = p.stdout.readline()
+        if line != '':
+            if options.verbose:
+                sys.stdout.write(line)
+            logfile.write(line)
+        else:
+            break
+    p.wait()
+    logfile.close()
+    if p.returncode != 0:
+        error("Command : " + cmd + " failed with error code " + str(p.returncode))
+
+def sanitize(str):
+    for key in buildVars.iterkeys():
+        str = str.replace(key, buildVars[key])
+    return str
+    
+def parseFile(filename, target = "main"):
+    ini_str = '[main]\n' + open(filename, 'r').read()
+    ini_fp = StringIO.StringIO(ini_str)
+    config = ConfigParser.RawConfigParser()
+    config.optionxform=str
+    config.readfp(ini_fp)
+
+    if not config.has_section(target):
+        error("There is no way to build the " + target + " target in the file " + filename)
+    else:
+        table = config._sections[target]
+    return table
+
+def info(txt):
+    print "\033[92m", txt, "\033[0m"
+def warn(txt):
+    print "\033[93m", txt, "\033[0m"
+def error(txt):
+    print "\033[91m", txt, "\033[0m"
+    quit()
+
+if __name__ == '__main__':
+    main()

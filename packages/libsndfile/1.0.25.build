@@ -1,0 +1,4 @@
+PACKAGE_URL=http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.25.tar.gz
+
+CONFIGURE_COMMANDS=\
+    ./configure --host=%TARGET% --prefix=%PREFIX% --with-sysroot=%DESTDIR%

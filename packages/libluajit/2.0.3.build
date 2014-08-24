@@ -1,0 +1,10 @@
+PACKAGE_URL=http://luajit.org/download/LuaJIT-2.0.3.tar.gz
+
+CONFIGURE_COMMANDS=
+
+BUILD_COMMANDS= unset CFLAGS
+ unset CPPFLAGS
+ unset LDFLAGS
+ make HOST_CC="gcc -m32" CROSS=%TARGET%- 
+
+INSTALL_COMMANDS=make install PREFIX=%DESTDIR%/%PREFIX%

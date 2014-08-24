@@ -1,0 +1,4 @@
+PACKAGE_URL=http://downloads.sourceforge.net/libpng/libpng-1.6.10.tar.xz
+
+CONFIGURE_COMMANDS=\
+    ./configure %CONFIGURE_OPTIONS% --disable-static --with-sysroot=%DESTDIR%

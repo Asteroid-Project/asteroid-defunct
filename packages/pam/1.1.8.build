@@ -1,0 +1,10 @@
+PACKAGE_URL=http://www.linux-pam.org/library/Linux-PAM-1.1.8.tar.gz
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --disable-nis --enable-db=no CC=%TARGET%-gcc CFLAGS="$CFLAGS -D__ARM_PCS_VFP" LD=%TARGET%-ld
+
+BUILD_COMMANDS=make CFLAGS="-D__ARM_PCS_VFP"
+
+INSTALL_COMMANDS=make install DESTDIR=%DESTDIR%
+ cp -r libpam/include/* %DESTDIR%/%PREFIX%/include
+
+# For some reasons this make install doesn't install the headers

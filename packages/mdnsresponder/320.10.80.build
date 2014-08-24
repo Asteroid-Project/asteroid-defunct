@@ -1,0 +1,9 @@
+PACKAGE_URL=http://www.opensource.apple.com/tarballs/mDNSResponder/mDNSResponder-320.10.80.tar.gz
+
+CONFIGURE_COMMANDS=
+
+BUILD_COMMANDS=cd mDNSPosix
+ sed -i "s/LD = gcc -shared/LD = %TOOLCHAIN%-ld -shared/" Makefile
+ make os=linux CC=%TOOLCHAIN%-gcc LD="%TOOLCHAIN%-ld -lc -lgcc" STRIP=%TOOLCHAIN%-strip
+
+INSTALL_COMMANDS=make install INSTBASE=%PREFIX% 

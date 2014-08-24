@@ -1,0 +1,3 @@
+PACKAGE_URL=http://xkbcommon.org/download/libxkbcommon-0.4.2.tar.xz
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --disable-x11

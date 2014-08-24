@@ -1,0 +1,12 @@
+PACKAGE_URL=https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-3.14.0.tar.xz
+
+CONFIGURE_COMMANDS=sed -i '/^TARGETS/s@arpd@@g' misc/Makefile
+    sed -i '/ARPD/d' Makefile
+    rm -v man/man8/arpd.8
+    sed -i '/netlink\//d' ip/ipl2tp.c
+    ./configure CC=%TARGET%-gcc AR=%TARGET%-ar PKG_CONFIG=%TARGET%-pkg-config HAVE_SELINUX=n
+    sed -i "s/PREFIX=\/usr/PREFIX=\/asteroid/" Makefile
+
+BUILD_COMMANDS=make %MAKE_OPTIONS% CC=%TARGET%-gcc AR=%TARGET%-ar PKG_CONFIG=%TARGET%-pkg-config HAVE_SELINUX=n
+
+INSTALL_COMMANDS=make install DESTDIR=%DESTDIR%

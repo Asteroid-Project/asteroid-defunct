@@ -1,0 +1,28 @@
+PACKAGE_URL=http://placeholder.fr/~leo/eglibc-linaro-2.19-2014.07.tar.bz2
+
+CONFIGURE_COMMANDS=\
+    mkdir -p build 
+    sed -r -i 's/(3..89..)/\1 | 4.*/' libc/configure
+    cd build 
+    echo "libc_cv_ssp=no" > config.cache
+    ../configure %CONFIGURE_OPTIONS% \
+        --prefix=/asteroid --sbindir=/asteroid/bin \
+        --libexecdir=/asteroid/lib \
+        --with-tls --with-__thread \
+        --with-binutils=%TOOLS_DIR%/bin \
+        --with-headers=%ROOTDIR_DIR%/asteroid/include \
+        --disable-profile \
+        --cache-file=config.cache \
+        --enable-kernel=2.6.0
+
+BUILD_COMMANDS=\
+    cd build/ 
+    make %MAKE_OPTIONS%
+
+INSTALL_COMMANDS=\
+    cd build/
+    make DESTDIR=%DESTDIR% install
+
+CLEAN_COMMANDS=\
+    cd build/
+    make clean

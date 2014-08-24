@@ -1,0 +1,5 @@
+PACKAGE_URL=http://ftp.gnu.org/gnu/coreutils/coreutils-8.22.tar.xz
+
+CONFIGURE_COMMANDS=\
+    patch -Np1 -i ../8.22-noman.patch
+    ./configure %CONFIGURE_OPTIONS%

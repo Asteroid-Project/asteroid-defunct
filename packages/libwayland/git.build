@@ -1,0 +1,4 @@
+PACKAGE_URL=git://anongit.freedesktop.org/wayland/wayland
+
+CONFIGURE_COMMANDS=./autogen.sh %CONFIGURE_OPTIONS% --disable-documentation
+ sed -i "s/wayland_scanner \= \$(top_builddir)\/wayland-scanner/wayland_scanner \= wayland-scanner/" Makefile

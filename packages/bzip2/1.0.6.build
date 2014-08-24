@@ -1,0 +1,30 @@
+PACKAGE_URL=http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz
+
+CONFIGURE_COMMANDS=\
+    sed -i "s/all: libbz2.a bzip2 bzip2recover test/all: libbz2.a bzip2 bzip2recover/" Makefile
+    sed -i "s/CFLAGS=-Wall/CFLAGS=-fPIC -Wall/" Makefile
+    sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
+    sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
+    sed -i "s/-O2 -g/-O2/" Makefile
+    sed -i "s/-O2 -g/-O2/" Makefile-libbz2_so
+
+BUILD_COMMANDS=\
+    make -f Makefile-libbz2_so %MAKE_OPTIONS% \
+        CC=%TARGET%-gcc AR=%TARGET%-ar \
+        RANLIB=%TARGET%-ranlib LD=%TARGET%-ld
+    echo clean
+    make clean
+    echo ok
+    make %MAKE_OPTIONS% \
+        CC=%TARGET%-gcc AR=%TARGET%-ar \
+        RANLIB=%TARGET%-ranlib LD=%TARGET%-ld
+
+INSTALL_COMMANDS=\
+    make PREFIX=%DESTDIR%/%PREFIX% install
+    rm %DESTDIR%/%PREFIX%/lib/libbz2.a
+    rm %DESTDIR%/%PREFIX%/bin/bunzip2
+    rm %DESTDIR%/%PREFIX%/bin/bzcat
+    cp -a libbz2.so* %DESTDIR%/%PREFIX%/lib
+    cp bzip2-shared %DESTDIR%/%PREFIX%/bin/bzip2
+    ln -s bzip2 %DESTDIR%/%PREFIX%/bin/bunzip2
+    ln -s bzip2 %DESTDIR%/%PREFIX%/bin/bzcat

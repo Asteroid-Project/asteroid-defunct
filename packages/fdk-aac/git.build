@@ -1,0 +1,4 @@
+PACKAGE_URL=https://github.com/mstorsjo/fdk-aac.git
+
+CONFIGURE_COMMANDS=./autogen.sh
+ ./configure %CONFIGURE_OPTIONS%

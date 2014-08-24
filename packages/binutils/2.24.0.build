@@ -1,0 +1,12 @@
+PACKAGE_URL=http://placeholder.fr/~leo/binutils-linaro-2.24.0-2014.07-1.tar.bz2
+HOST_BUILD=true
+
+CONFIGURE_COMMANDS=\
+    sed -i -e 's/ @colophon/ @@colophon/' -e 's/doc@cygnus.com/doc@@cygnus.com/' bfd/doc/bfd.texinfo
+    echo ELF_INTERPRETER_NAME=\"\\\"/asteroid/lib/ld-linux-armhf.so.3\\\"\" >> ld/emulparams/armelf_linux_eabi.sh
+    ./configure %CONFIGURE_OPTIONS% \
+        --target=%TARGET% \
+        --with-sysroot=%ROOTDIR_DIR% \
+        --with-lib-path="=/asteroid/lib:=/asteroid/usr/lib" \
+        --disable-nls --disable-static --disable-multilib \
+        --enable-lto

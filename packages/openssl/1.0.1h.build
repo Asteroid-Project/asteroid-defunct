@@ -1,0 +1,7 @@
+PACKAGE_URL=http://www.openssl.org/source/openssl-1.0.1h.tar.gz
+
+CONFIGURE_COMMANDS=./Configure linux-arm shared zlib-dynamic no-asm compiler:%TARGET%-gcc --prefix=%PREFIX% no-asm -fPIC
+
+BUILD_COMMANDS=make CC="%TARGET%-gcc -g" AR="%TARGET%-ar r" RANLIB=%TARGET%-ranlib
+
+INSTALL_COMMANDS=make INSTALL_PREFIX=%DESTDIR% install

@@ -1,0 +1,8 @@
+PACKAGE_URL=http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.4.0.tar.xz
+
+CONFIGURE_COMMANDS=\
+    ./configure %CONFIGURE_OPTIONS% --with-sysroot=%DESTDIR%
+
+BUILD_COMMANDS=make %MAKE_OPTIONS% ERROR_CFLAGS=""
+
+# Gstreamer's compilation does too much tests (-Wall -Werror) and fails on system wide libraries issues

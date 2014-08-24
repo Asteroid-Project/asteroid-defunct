@@ -1,0 +1,10 @@
+PACKAGE_URL=http://busybox.net/downloads/busybox-1.22.1.tar.bz2
+
+CONFIGURE_COMMANDS=\
+    cp ../config-1.22.1-rd configs/asteroid_defconfig
+    make asteroid_defconfig
+
+INSTALL_COMMANDS=\
+    cp -v busybox %RAMDISK_DIR%/bin
+    cd %RAMDISK_DIR%/bin
+    ln -sf busybox sh

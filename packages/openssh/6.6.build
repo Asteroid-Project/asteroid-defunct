@@ -1,0 +1,6 @@
+PACKAGE_URL=http://ftp.fr.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-6.6p1.tar.gz
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --with-privsep-path=/var/empty --with-libs --with-zlib-include=%PREFIX%/include --with-zlib-lib=%PREFIX/lib
+ sed -i "s/STRIP_OPT=-s/STRIP_OPT=/" Makefile
+
+INSTALL_COMMANDS=make install-nokeys DESTDIR=%DESTDIR%

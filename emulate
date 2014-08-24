@@ -1,0 +1,3 @@
+#!/bin/sh
+export LD_LIBRARY_PATH=$PWD/output/tools/lib/:$LD_LIBRARY_PATH
+output/tools/bin/emulator-arm -show-kernel -kernel output/kernel -ramdisk output/ramdisk.img -system output/root.img -data /dev/null -sysdir output -no-cache -no-snapstorage -no-skin -gpu on -partition-size 500 -shell -qemu -cpu cortex-a8

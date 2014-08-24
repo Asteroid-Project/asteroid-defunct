@@ -1,0 +1,20 @@
+PACKAGE_URL=http://download.oracle.com/berkeley-db/db-6.1.19.tar.gz
+
+CONFIGURE_COMMANDS=\
+    cd build_unix
+    ../dist/configure %CONFIGURE_OPTIONS% \
+        --enable-dbm --enable-cxx --enable-compat185 \
+        --disable-static
+
+BUILD_COMMANDS=\
+    cd build_unix
+    make %MAKE_OPTIONS%
+    bash
+
+INSTALL_COMMANDS=\
+    cd build_unix
+    make DESTDIR=/home/leo/foo docdir=/asteroid/share/doc install
+
+CLEAN_COMMANDS=\
+    cd build_unix
+    make clean

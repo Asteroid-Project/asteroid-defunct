@@ -1,0 +1,4 @@
+PACKAGE_URL=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.4.0.tar.xz
+
+CONFIGURE_OPTIONS=\
+    ./configure %CONFIGURE_OPTIONS% --with-sysroot=%DESTDIR%

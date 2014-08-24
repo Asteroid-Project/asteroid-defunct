@@ -1,0 +1,6 @@
+PACKAGE_URL=http://ftp.gnu.org/gnu/bc/bc-1.06.tar.gz
+
+CONFIGURE_COMMANDS=autoconf
+ ./configure %CONFIGURE_OPTIONS%
+
+# The default configure doesn't recognizes well the cross compiler

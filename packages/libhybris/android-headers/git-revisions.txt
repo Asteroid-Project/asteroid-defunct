@@ -1,0 +1,16 @@
+================================================
+hardware/libhardware @ Sat May 24 21:05:58 CEST 2014
+================================================
+WARNING: hardware/libhardware does not contain a Git repository
+================================================
+hardware/libhardware_legacy @ Sat May 24 21:05:58 CEST 2014
+================================================
+WARNING: hardware/libhardware_legacy does not contain a Git repository
+================================================
+system/core @ Sat May 24 21:05:58 CEST 2014
+================================================
+WARNING: system/core does not contain a Git repository
+================================================
+external/libnfc-nxp @ Sat May 24 21:05:58 CEST 2014
+================================================
+WARNING: external/libnfc-nxp does not contain a Git repository

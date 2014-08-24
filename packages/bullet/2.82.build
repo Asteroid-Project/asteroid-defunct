@@ -1,0 +1,18 @@
+PACKAGE_URL=https://bullet.googlecode.com/files/bullet-2.82-r2704.tgz
+
+CONFIGURE_COMMANDS=if [ -f CMakeLists.txt-original ]
+ then
+    cp CMakeLists.txt-original CMakeLists.txt
+ else
+    cp CMakeLists.txt CMakeLists.txt-original
+ fi
+ sed -i "3i\SET(CMAKE_SYSTEM_NAME Linux)" CMakeLists.txt
+ sed -i "4i\SET(TOOLCHAIN_PREFIX   "%TARGET%-")" CMakeLists.txt
+ sed -i "5i\SET(CMAKE_C_COMPILER   %TARGET%-gcc)" CMakeLists.txt
+ sed -i "6i\SET(CMAKE_CXX_COMPILER %TARGET%-g++)" CMakeLists.txt
+ sed -i "7i\SET(CMAKE_FIND_ROOT_PATH %DESTDIR%/%PREFIX%)" CMakeLists.txt
+ sed -i "8i\SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)" CMakeLists.txt
+ sed -i "9i\SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)" CMakeLists.txt
+ sed -i "10i\SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)" CMakeLists.txt
+ cmake . -DCMAKE_INSTALL_PREFIX:PATH=%PREFIX% -DBUILD_DEMOS:BOOL=OFF -DBUILD_EXTRAS:BOOL=OFF . -G "Unix Makefiles"
+

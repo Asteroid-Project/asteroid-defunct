@@ -1,0 +1,7 @@
+PACKAGE_URL=http://daniel-baumann.ch/files/software/dosfstools/dosfstools-3.0.26.tar.xz
+
+CONFIGURE_COMMANDS=
+
+BUILD_COMMANDS=make %MAKE_OPTIONS% CC=%TARGET%-gcc AR=%TARGET%-ar RANLIB=%TARGET%-ranlib
+
+INSTALL_COMMANDS=make install DESTDIR=%DESTDIR% PREFIX=%PREFIX%

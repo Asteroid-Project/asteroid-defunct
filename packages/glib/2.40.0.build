@@ -1,0 +1,9 @@
+PACKAGE_URL=http://ftp.gnome.org/pub/gnome/sources/glib/2.40/glib-2.40.0.tar.xz
+
+CONFIGURE_COMMANDS=echo "glib_cv_stack_grows=no" > config.cache
+ echo "glib_cv_uscore=no" >> config.cache
+ echo "ac_cv_func_posix_getpwuid_r=yes" >> config.cache
+ echo "ac_cv_func_posix_getgrgid_r=yes" >> config.cache
+ ./configure %CONFIGURE_OPTIONS% --config-cache --with-sysroot=%DESTDIR%
+
+# Glib needs some infos about the destination platform, this config.cache should be adapted to the %ARCH%

@@ -1,0 +1,5 @@
+PACKAGE_URL=http://ftp.gnu.org/pub/gnu/findutils/findutils-4.4.2.tar.gz
+
+CONFIGURE_COMMANDS=echo "gl_cv_func_wcwidth_works=yes" > config.cache
+ echo "ac_cv_func_fnmatch_gnu=yes" >> config.cache
+ ./configure %CONFIGURE_OPTIONS% --cache-file=config.cache

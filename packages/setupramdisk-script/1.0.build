@@ -1,0 +1,5 @@
+SCRIPT=\
+    cp init-1.0 %RAMDISK_DIR%/init
+    cp bootsplash-1.0 %RAMDISK_DIR%/bootsplash
+    cd %RAMDISK_DIR%
+    mkdir -p bin dev proc sys

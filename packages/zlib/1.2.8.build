@@ -1,0 +1,8 @@
+PACKAGE_URL=http://zlib.net/zlib-1.2.8.tar.gz
+
+CONFIGURE_COMMANDS=\
+    CC=%TARGET%-gcc ./configure --prefix=/asteroid
+
+INSTALL_COMMANDS=\
+    make install prefix=%DESTDIR%/%PREFIX%
+    rm %DESTDIR%/%PREFIX%/lib/libz.a
