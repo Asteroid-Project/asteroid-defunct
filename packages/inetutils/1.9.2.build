@@ -4,9 +4,9 @@ CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS%
  patch -p1 < ../PATH_PROCNET_DEV-1.9.2.patch ; true
 
 INSTALL_COMMANDS=make install DESTDIR=%DESTDIR% 
- chmod +x /home/kido/asteroid/git/output/rootdir//asteroid/bin/ping
- chmod +x /home/kido/asteroid/git/output/rootdir//asteroid/bin/ping6
- chmod +x /home/kido/asteroid/git/output/rootdir//asteroid/bin/rcp
- chmod +x /home/kido/asteroid/git/output/rootdir//asteroid/bin/rlogin
- chmod +x /home/kido/asteroid/git/output/rootdir//asteroid/bin/rsh
- chmod +x /home/kido/asteroid/git/output/rootdir//asteroid/bin/traceroute
+ chmod +x %DESTDIR%/%PREFIX%/bin/ping
+ chmod +x %DESTDIR%/%PREFIX%/bin/ping6
+ chmod +x %DESTDIR%/%PREFIX%/bin/rcp
+ chmod +x %DESTDIR%/%PREFIX%/bin/rlogin
+ chmod +x %DESTDIR%/%PREFIX/bin/rsh
+ chmod +x %DESTDIR%/%PREFIX%/bin/traceroute
