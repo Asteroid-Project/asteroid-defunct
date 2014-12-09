@@ -82,11 +82,12 @@ BUILD_COMMANDS=\
 INSTALL_COMMANDS=\
     cd build-p2
     make install
-    cp %PREFIX%/%TARGET%/lib/*.so %ROOTDIR_DIR%/asteroid/lib/
+    cp %PREFIX%/%TARGET%/lib/* %ROOTDIR_DIR%/asteroid/lib/
     cp -r %PREFIX%/%TARGET%/include/* %ROOTDIR_DIR%/asteroid/include/
     DIR=$(echo %PREFIX%/arm-linux-gnueabihf/lib | sed s/\\//\\\\\\//g)
     echo sed -i "s/$DIR/=\/asteroid\/lib/g" %PREFIX%/arm-linux-gnueabihf/lib/*.la
     sed -i "s/$DIR/=\/asteroid\/lib/g" %PREFIX%/arm-linux-gnueabihf/lib/*.la
+    cd %ROOTDIR%/%PREFIX%/lib
 
 CLEAN_COMMANDS=\
     cd build-p2

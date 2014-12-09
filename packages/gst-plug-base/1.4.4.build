@@ -1,0 +1,7 @@
+PACKAGE_URL=http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.4.4.tar.xz
+
+CONFIGURE_OPTIONS=\
+    echo "ac_cv_have_x=no" > config.cache
+    ./configure %CONFIGURE_OPTIONS% --cache-file=config.cache
+
+# ./configure ignores --disable-x and tries to compile ximagesink... We have to disable that manually

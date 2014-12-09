@@ -1,0 +1,12 @@
+PACKAGE_URL=http://hostap.epitest.fi/releases/wpa_supplicant-2.3.tar.gz
+
+CONFIGURE_COMMANDS=cd wpa_supplicant/
+    cp defconfig .config
+    echo "CONFIG_LIBNL32=y" >> .config
+    echo "CFLAGS += -I%DESTDIR%/%PREFIX%/include/libnl3/" >> .config
+
+BUILD_COMMANDS=cd wpa_supplicant
+ make %MAKE_OPTIONS% CC=%TARGET%-gcc
+
+INSTALL_COMMANDS=cd wpa_supplicant
+ make install DESTDIR=%DESTDIR%/%PREFIX% LIBDIR=/lib BINDIR=/bin

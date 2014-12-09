@@ -1,7 +1,7 @@
 PACKAGE_URL=https://github.com/libhybris/libhybris.git
 
 CONFIGURE_COMMANDS=cd hybris
- ./autogen.sh --with-android-headers=$PWD/../../android-headers/ --enable-wayland --enable-debug %CONFIGURE_OPTIONS% DESTDIR=%DESTDIR% LD=%TARGET%-ld
+ ./autogen.sh --with-android-headers=$PWD/../../android-headers/ --enable-wayland --with-default-egl-platform=wayland --enable-trace --enable-debug %CONFIGURE_OPTIONS% DESTDIR=%DESTDIR% LD=%TARGET%-ld
 
 BUILD_COMMANDS=cd hybris
  ln -s $PWD/hardware/.libs/libhardware.so.2 %DESTDIR%/%PREFIX%/lib/libhardware.so.2

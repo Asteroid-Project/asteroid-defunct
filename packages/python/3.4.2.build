@@ -1,0 +1,5 @@
+PACKAGE_URL=https://www.python.org/ftp/python/3.4.2/Python-3.4.2.tar.xz
+
+CONFIGURE_COMMANDS=echo ac_cv_file__dev_ptmx=no > ./config.site
+ echo ac_cv_file__dev_ptc=no >> ./config.site
+ CONFIG_SITE=config.site ./configure %CONFIGURE_OPTIONS% --build=x86_64-ubuntu-linux --disable-ipv6 --with-ensurepip=install

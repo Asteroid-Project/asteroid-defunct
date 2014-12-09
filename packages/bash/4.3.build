@@ -1,0 +1,4 @@
+PACKAGE_URL=http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz
+
+CONFIGURE_COMMANDS=cp ../config.cache-4.3 config.cache 
+ ./configure %CONFIGURE_OPTIONS% --without-bash-malloc --cache-file=config.cache --enable-readline

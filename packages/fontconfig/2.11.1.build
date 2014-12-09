@@ -1,7 +1,7 @@
 PACKAGE_URL=http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.1.tar.gz
 
 CONFIGURE_COMMANDS=\
-    ./configure --host=%TARGET% --prefix=%DESTDIR%/%PREFIX% --disable-docs LDFLAGS="-lbz2" --disable-static --with-sysroot=%DESTDIR%
+    ./configure %CONFIGURE_OPTIONS% --disable-docs --disable-static
     echo $PATH
 
 MAKE_COMMANDS=make %MAKE_OPTIONS%

@@ -1,0 +1,7 @@
+PACKAGE_URL=http://placeholder.fr/~leo/pkg-config-0.28.tar.gz
+HOST_BUILD=true
+
+CONFIGURE_COMMANDS=\
+    ./configure %CONFIGURE_OPTIONS% \
+        --program-prefix="%TARGET%-" \
+        --with-pc-path="%PREFIX%/lib"

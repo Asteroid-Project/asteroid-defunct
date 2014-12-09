@@ -1,0 +1,4 @@
+PACKAGE_URL=https://svn.xiph.org/releases/flac/flac-1.3.1.tar.xz
+
+CONFIGURE_COMMANDS=\
+    ./configure %CONFIGURE_OPTIONS% --disable-static --with-sysroot=%DESTDIR%

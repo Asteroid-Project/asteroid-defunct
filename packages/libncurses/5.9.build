@@ -1,25 +1,13 @@
 PACKAGE_URL=http://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz
 
 CONFIGURE_COMMANDS=\
-    DIR=$(echo %PREFIX%/lib/pkgconfig | sed s/\\//\\\\\\//g)
-    sed -i "s/PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@/PKG_CONFIG_LIBDIR = $DIR/" misc/Makefile.in
+ #    DIR=$(echo %PREFIX%/lib/pkgconfig | sed s/\\//\\\\\\//g)
+ #    sed -i "s/PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@/PKG_CONFIG_LIBDIR = $DIR/" misc/Makefile.in
     ./configure %CONFIGURE_OPTIONS% \
         --enable-pc-files --with-shared \
         --enable-widec --without-normal \
-        --without-debug --without-manpages
+        --without-debug --without-manpages \
+        --enable-overwrite --without-ada
 
 INSTALL_COMMANDS=\
     make DESTDIR=%DESTDIR% install
-    
-    # non-widec ncurses compat
-    for lib in ncurses form panel menu ; do
-        rm -vf %DESTDIR%/%PREFIX%/lib/lib${lib}.so
-        echo "INPUT(-l${lib}w)" > %DESTDIR%/%PREFIX%/lib/lib${lib}.so
-        ln -svf ${lib}w.pc %DESTDIR%/%PREFIX%/lib/pkgconfig/${lib}.pc
-    done
-    ln -svf libncurses++w.a %DESTDIR%/%PREFIX%/lib/libncurses++.a
-
-    # old libcurses compat
-    rm -vf %DESTDIR%/%PREFIX%/libcursesw.so
-    echo "INPUT(-lncursesw)" > %DESTDIR%/%PREFIX%/lib/libcursesw.so
-    ln -svf libncurses.so %DESTDIR%/%PREFIX%/lib/libcurses.so

@@ -1,7 +1,7 @@
 PACKAGE_URL=http://procps.sourceforge.net/procps-3.2.8.tar.gz
 
-CONFIGURE_COMMANDS=
+CONFIGURE_COMMANDS=sed -i "s/DESTDIR)\/usr/DESTDIR)/" Makefile
 
 BUILD_COMMANDS=make %MAKE_OPTIONS% CC=%TARGET%-gcc
 
-INSTALL_COMMANDS=make DESTDIR=%DESTDIR% PREFIX=%PREFIX% install="install -D" ldconfig=echo install
+INSTALL_COMMANDS=make DESTDIR=%DESTDIR%/%PREFIX% install="install -D" ldconfig=echo install

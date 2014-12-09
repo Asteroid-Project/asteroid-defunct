@@ -1,10 +1,10 @@
 PACKAGE_URL=https://android.googlesource.com/kernel/goldfish.git
-GIT_OPT=-b android-goldfish-3.4 --depth 1
+GIT_OPT=-b android-goldfish-3.10 --depth 1
 
 CONFIGURE_COMMANDS=\
-    git checkout -t origin/android-goldfish-3.4
-    cp ../config-3.4 arch/arm/configs/asteroid-goldfish_defconfig
-    patch -i ../gobohide.patch-3.4 -p1 
+    git checkout -t origin/android-goldfish-3.10 # Why do I have to write that?
+    cp ../config-3.10 arch/arm/configs/asteroid-goldfish_defconfig
+    patch -i ../gobohide.patch-3.10 -p1 
     ARCH=arm CROSS_COMPILE=%TARGET%- make asteroid-goldfish_defconfig
 
 BUILD_COMMANDS=ARCH=arm CROSS_COMPILE=%TARGET%- make %MAKE_OPTIONS%

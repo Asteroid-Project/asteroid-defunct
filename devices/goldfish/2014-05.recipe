@@ -3,5 +3,5 @@ qemu/git
 linux/3.4 headers
 Asteroid
 linux/3.4
-driverinstall-script/1.0
+driverinstall-script/0.1
 mkimgs-script/1.0

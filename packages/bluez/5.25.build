@@ -1,0 +1,3 @@
+PACKAGE_URL=http://www.kernel.org/pub/linux/bluetooth/bluez-5.25.tar.xz
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --disable-systemd --disable-cups --disable-obex --enable-library --with-udevdir=/asteroid/etc/udev/

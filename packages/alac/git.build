@@ -1,8 +1,4 @@
-PACKAGE_URL=git://git.macosforge.org/alac.git
+PACKAGE_URL=https://github.com/TimothyGu/alac.git
 
-CONFIGURE_COMMANDS=
-
-BUILD_COMMANDS=cd codec/
- make CC=%TARGET%-g++
-
-INSTALL_COMMANDS=cp codec/libalac.a %DESTDIR%/%PREFIX%/lib/
+CONFIGURE_COMMANDS=autoreconf -i -f
+ ./configure %CONFIGURE_OPTIONS%

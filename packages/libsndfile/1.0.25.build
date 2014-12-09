@@ -1,4 +1,6 @@
 PACKAGE_URL=http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.25.tar.gz
 
 CONFIGURE_COMMANDS=\
-    ./configure --host=%TARGET% --prefix=%PREFIX% --with-sysroot=%DESTDIR%
+    ./configure %CONFIGURE_OPTIONS% --disable-external-libs
+
+# TODO: There is a issue with vorbis putting unexpected equals into libsndfile.la . Gotta investigate that
