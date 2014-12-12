@@ -1,0 +1,5 @@
+packages/*/*.build*.log*
+packages/*/*/
+devices/*/packages/*/*.build*.log*
+devices/*/packages/*/*/
+output/
