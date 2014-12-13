@@ -268,16 +268,22 @@ def toggleHostBuild(toggle):
         os.environ["CXXFLAGS"] = "-I" + buildRoot + "/output/hosttools/include"
         os.environ["LDFLAGS"] = "-L" + buildRoot + "/output/hosttools/lib"
         os.environ["PKG_CONFIG_PATH"] = buildRoot + "/output/hosttools/lib/pkgconfig"
-        os.environ["PKG_CONFIG_LIBDIR"] = ""
-        os.environ["PKG_CONFIG_SYSROOT_DIR"] = ""
+        if "PKG_CONFIG_LIBDIR" in os.environ:
+            del os.environ["PKG_CONFIG_LIBDIR"]
+        if "PKG_CONFIG_SYSROOT_DIR" in os.environ:
+            del os.environ["PKG_CONFIG_SYSROOT_DIR"]
         buildVars["%CONFIGURE_OPTIONS%"] = "--prefix=" + buildRoot + "/output/hosttools"
         buildVars["%PREFIX%"] = buildRoot + "/output/hosttools"
         buildVars["%DESTDIR%"] = ""
     else:
-        os.environ["CFLAGS"] = ""
-        os.environ["CXXFLAGS"] = ""
-        os.environ["LDFLAGS"] = ""
-        os.environ["PKG_CONFIG_PATH"] = ""
+        if "CFLAGS" in os.environ:
+            del os.environ["CFLAGS"]
+        if "CXXFLAGS" in os.environ:
+            del os.environ["CXXFLAGS"]
+        if "LDFLAGS" in os.environ:
+            del os.environ["LDFLAGS"]
+        if "PKG_CONFIG_PATH" in os.environ:
+            del os.environ["PKG_CONFIG_PATH"]
         os.environ["PKG_CONFIG_LIBDIR"] = buildRoot + "/output/rootdir/asteroid/lib/pkgconfig"
         os.environ["PKG_CONFIG_SYSROOT_DIR"] = buildRoot + "/output/rootdir"
         buildVars["%CONFIGURE_OPTIONS%"] = "--prefix=/asteroid/ --host=" + options.target + " --with-sysroot=" + buildRoot + "/output/rootdir"
