@@ -1,4 +1,5 @@
 SCRIPT=\
+    mkdir -p %RAMDISK_DIR%
     cp init-1.0 %RAMDISK_DIR%/init
     cp bootsplash-1.0 %RAMDISK_DIR%/bootsplash
     cd %RAMDISK_DIR%
