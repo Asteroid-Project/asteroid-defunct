@@ -5,7 +5,8 @@ all:
 
 install:
 	mkdir -p $(DESTDIR)/$(INCLUDEDIR)
-	cp android-config.h android-version.h $(DESTDIR)/$(INCLUDEDIR)
+	cp android-config.h android-version.h android-headers.pc $(DESTDIR)/$(INCLUDEDIR)
+	sed -i -e s:prefix=/usr:prefix=$(PREFIX):g $(DESTDIR)/$(INCLUDEDIR)/android-headers.pc
 	cp -r hardware $(DESTDIR)/$(INCLUDEDIR)
 	cp -r hardware_legacy $(DESTDIR)/$(INCLUDEDIR)
 	cp -r cutils $(DESTDIR)/$(INCLUDEDIR)

@@ -1,16 +1,141 @@
 ================================================
-hardware/libhardware @ Sat May 24 21:05:58 CEST 2014
+hardware/libhardware @ Tue Dec  9 22:38:37 CET 2014
 ================================================
-WARNING: hardware/libhardware does not contain a Git repository
++ cd /home/kido/asteroid/mini-android/
++ repo status hardware/libhardware
+./extract-headers.sh: ligne 223: repo : commande introuvable
++ cd /home/kido/asteroid/mini-android//hardware/libhardware
++ git show-ref --head
+56910cf52332219c6a23bc12596b261c127d93bf HEAD
+56910cf52332219c6a23bc12596b261c127d93bf refs/heads/kitkat-mr2.2-release
+56910cf52332219c6a23bc12596b261c127d93bf refs/remotes/origin/kitkat-mr2.2-release
+cef59c7843709b99dac834be5f36668d9fa15443 refs/tags/android-4.4.3_r1
+6271d9bc00bc6d40843b849d086efadfe9dd0352 refs/tags/android-4.4.3_r1.0.1
+d3bba20b9697c1db4498f0243bdbd484fde400c5 refs/tags/android-4.4.3_r1.1
+95c3d97389154df17eb1ba0230ed596828e553c6 refs/tags/android-4.4.3_r1.1.0.1
+d90a7ff72a69f8006afc7d8825cc1aa9ab07df4d refs/tags/android-4.4.4_r1
+ca32e2fb98e92d00e04194abb0d6a793c33653d1 refs/tags/android-4.4.4_r1.0.1
+c739f46081b51eec4e484e12a2f456b93de3c3b6 refs/tags/android-4.4.4_r2
+289755fd768b18b7a5540a83f27b75a7facc5132 refs/tags/android-4.4.4_r2.0.1
+e58325fd8e4fb943c0b2070e6ad2444a323e561a refs/tags/android-4.4w_r1
++ git remote -v
+origin	https://android.googlesource.com/platform/hardware/libhardware (fetch)
+origin	https://android.googlesource.com/platform/hardware/libhardware (push)
+
+
 ================================================
-hardware/libhardware_legacy @ Sat May 24 21:05:58 CEST 2014
+hardware/libhardware_legacy @ Tue Dec  9 22:38:37 CET 2014
 ================================================
-WARNING: hardware/libhardware_legacy does not contain a Git repository
++ cd /home/kido/asteroid/mini-android/
++ repo status hardware/libhardware_legacy
+./extract-headers.sh: ligne 223: repo : commande introuvable
++ cd /home/kido/asteroid/mini-android//hardware/libhardware_legacy
++ git show-ref --head
+18fc094c0ed41851be3d746423c6695dd28d48e1 HEAD
+18fc094c0ed41851be3d746423c6695dd28d48e1 refs/heads/kitkat-mr2.2-release
+18fc094c0ed41851be3d746423c6695dd28d48e1 refs/remotes/origin/kitkat-mr2.2-release
+f62a81eeda9c3e89dacc7aec40eed71f39f7aca0 refs/tags/android-4.4.1_r1
+7b45da46a95d9a045febb38acff14eb38393048d refs/tags/android-4.4.1_r1.0.1
+01f436c51dc68aec7cc1c85fda6e6792b2a95066 refs/tags/android-4.4.2_r1
+d46877a81acc8adc9e6c73e45c2184d07fd29a76 refs/tags/android-4.4.2_r1.0.1
+7870f6acdbde9677ea47db0b1a2abbbf36c9e8df refs/tags/android-4.4.2_r2
+a0ebeeb4576bedc33c62661e1d8427df6a8a7a67 refs/tags/android-4.4.2_r2.0.1
+96d5e8b26cac40a9b345573dea0d2acdd17d072c refs/tags/android-4.4.3_r1
+37d44b334ac590826600cf8ced515cc3ce26e04d refs/tags/android-4.4.3_r1.0.1
+50d66838c29c6d37af7da3421bedd47507b3d420 refs/tags/android-4.4.3_r1.1
+39f7065da34709fabb22078e8e2cd8989bd8969d refs/tags/android-4.4.3_r1.1.0.1
+045367e6a5d9157abdfe9662a2d46cafebfd57fc refs/tags/android-4.4.4_r1
+9602faefd11e9bee0b04b176f62669503a77c937 refs/tags/android-4.4.4_r1.0.1
+178095595ee36a7e4f44679d62dd8736b1eb6c88 refs/tags/android-4.4.4_r2
+b8d90ca3bba07353478b84b468ddd81bd628550b refs/tags/android-4.4.4_r2.0.1
+33a0651480eb9b6a4ffceeede5f18c55aee9cf3d refs/tags/android-4.4w_r1
+9c91bc27f61e762be7f78e5821d9d1631a771edd refs/tags/android-sdk-4.4.2_r1
+da0f769f894a28c4967bb58b2e5117706bf09390 refs/tags/android-sdk-4.4.2_r1.0.1
++ git remote -v
+origin	https://android.googlesource.com/platform/hardware/libhardware_legacy (fetch)
+origin	https://android.googlesource.com/platform/hardware/libhardware_legacy (push)
+
+
 ================================================
-system/core @ Sat May 24 21:05:58 CEST 2014
+system/core @ Tue Dec  9 22:38:37 CET 2014
 ================================================
-WARNING: system/core does not contain a Git repository
++ cd /home/kido/asteroid/mini-android/
++ repo status system/core
+./extract-headers.sh: ligne 223: repo : commande introuvable
++ cd /home/kido/asteroid/mini-android//system/core
++ git show-ref --head
+efbf36f2dad8f083de6f48dbb682461d7cfa9781 HEAD
+efbf36f2dad8f083de6f48dbb682461d7cfa9781 refs/heads/kitkat-mr2.2-release
+efbf36f2dad8f083de6f48dbb682461d7cfa9781 refs/remotes/origin/kitkat-mr2.2-release
+a60f38376bf1a597c3d6b94fa87a60e4adb0b7ef refs/tags/android-4.4.3_r1
+8898b89448f08277d0ff0df30cec5ec3e3d28872 refs/tags/android-4.4.3_r1.0.1
+e0379c8c9844ac332b63e46a499bb242412e0724 refs/tags/android-4.4.3_r1.1
+8ddf78d232e84c79b695f669ccb8bec5a641dafc refs/tags/android-4.4.3_r1.1.0.1
+c33036b592f8b1545d442fcf13d36e1ed0ed9e2c refs/tags/android-4.4.4_r1
+fa62df2ac7f6f695488755d904386cfcb55f7b27 refs/tags/android-4.4.4_r1.0.1
+d60446dab53111ae26391086a3e20a0f84697538 refs/tags/android-4.4.4_r2
+53bd3ba075447941e4b85cb81575c7febe92d537 refs/tags/android-4.4.4_r2.0.1
+ac89b617e8b465bfffbb1a554ee4077df7d1377e refs/tags/android-4.4w_r1
++ git remote -v
+origin	https://android.googlesource.com/platform/system/core (fetch)
+origin	https://android.googlesource.com/platform/system/core (push)
+
+
 ================================================
-external/libnfc-nxp @ Sat May 24 21:05:58 CEST 2014
+external/libnfc-nxp @ Tue Dec  9 22:38:37 CET 2014
 ================================================
-WARNING: external/libnfc-nxp does not contain a Git repository
++ cd /home/kido/asteroid/mini-android/
++ repo status external/libnfc-nxp
+./extract-headers.sh: ligne 223: repo : commande introuvable
++ cd /home/kido/asteroid/mini-android//external/libnfc-nxp
++ git show-ref --head
+9e987ccb716624d658f98abc7db2097e11e3d8ed HEAD
+9e987ccb716624d658f98abc7db2097e11e3d8ed refs/heads/kitkat-mr2.2-release
+9e987ccb716624d658f98abc7db2097e11e3d8ed refs/remotes/origin/kitkat-mr2.2-release
+dbe2cd5793d1635e8f5d27b9038604ba0b2a5a14 refs/tags/android-4.3.1_r1
+cb72fa9943de3d14884816ec4925132ec97b2fcf refs/tags/android-4.3_r0.9
+a10cd30b5a34adaf6621fe712e11cfc37654952c refs/tags/android-4.3_r0.9.1
+2c461128ade119915f30ab5b9916f3d21f358313 refs/tags/android-4.3_r1
+3092e76b0da78aeed389f7c71e8f489f31cc12b5 refs/tags/android-4.3_r1.1
+98d56e8db974a56b1b720615b9eac6585d9beaad refs/tags/android-4.3_r2
+8bf95c739da6c60a08b07297a1d7b996d51fd53b refs/tags/android-4.3_r2.1
+502218559d511e2a4697a3fc2bbf19bebadb9754 refs/tags/android-4.3_r2.2
+afdf6a1e5a766cf7ab91fab9bbb1c9fb1185eddc refs/tags/android-4.3_r2.3
+650b1359320a55620ddeccc135ce94a2d96c9146 refs/tags/android-4.3_r3
+0e8fc407b625f1ed6733911e7b16dd38788925a1 refs/tags/android-4.3_r3.1
+e5a09cc645641646385b356aa0e90d1e221176d8 refs/tags/android-4.4.1_r1
+e6e394bc43f1fb1f28938880bbebd0425fa13e2e refs/tags/android-4.4.1_r1.0.1
+06209143852be5967c67eb7675d80ea6250c6487 refs/tags/android-4.4.2_r1
+6455154782211150a07fa4fee9b045a50c6fe662 refs/tags/android-4.4.2_r1.0.1
+8ed9a894325715a8fc1d6952a2e8672098fb886d refs/tags/android-4.4.2_r2
+f13c82c1790be00b01af8d634ba45fc37566840a refs/tags/android-4.4.2_r2.0.1
+6d3292a5de1bcd0ca1817a7a6ab1ee546327d292 refs/tags/android-4.4.3_r1
+9d6aa4a678cb530112e0595da1dbe38ff4606d7e refs/tags/android-4.4.3_r1.0.1
+cc0c01c7788d0cf5164d96d2ee18ea4c2843c65b refs/tags/android-4.4.3_r1.1
+b9a0a4a9195fb5c9ef4fdd949d0aa6854ebee3bf refs/tags/android-4.4.3_r1.1.0.1
+3ae575f95bd8a2a2a049915f7f03c49ae23bc103 refs/tags/android-4.4.4_r1
+5aae05728e64da6d01bdad917c964f8b04fe99b5 refs/tags/android-4.4.4_r1.0.1
+2fbcf8603971508ca324681a6c3c51464af37f42 refs/tags/android-4.4.4_r2
+cd3270c05aff3c3a4214acd2d8ef0d2dcfd51a5a refs/tags/android-4.4.4_r2.0.1
+674b46321b7116e1877ef4768376db78fdd4968e refs/tags/android-4.4_r0.7
+71623a852c8884b5b49f023cda6fb0301294baae refs/tags/android-4.4_r0.8
+ad6a6c5c7fda21f93edc51bf8a6935a783d77e23 refs/tags/android-4.4_r0.9
+ae3cf747ba7b2171180ff4836b085bd0561ebfde refs/tags/android-4.4_r1
+b608e7a2f51155f994763a6ff980c41fc998c906 refs/tags/android-4.4_r1.0.1
+033a8d76862eca8070040a8431eb6ce6cca10dfc refs/tags/android-4.4_r1.1
+15fed215dad776f0219c5240c2cdfe7a77a409eb refs/tags/android-4.4_r1.1.0.1
+3f0b1c9ea585d3330dfb3264b1f95755e20f5698 refs/tags/android-4.4_r1.2
+f46398116e00398c0b720868c3709479ba3b9144 refs/tags/android-4.4_r1.2.0.1
+024783044212dc19a24cda87a1cfc6bfec444802 refs/tags/android-4.4w_r1
+30779d8f4293d747f0aa990aaed2bf12771f7e6c refs/tags/android-cts-4.4_r1
+7f4ebadc862c4a40da2815ed94c1c5fddc45bf49 refs/tags/android-sdk-4.4.2_r1
+4b240b490b6be01d4c1dea895a948d7832078a4c refs/tags/android-sdk-4.4.2_r1.0.1
++ git remote -v
+origin	https://android.googlesource.com/platform/external/libnfc-nxp (fetch)
+origin	https://android.googlesource.com/platform/external/libnfc-nxp (push)
+
+
+================================================
+external/linux-headers @ Tue Dec  9 22:38:37 CET 2014
+================================================
+WARNING: external/linux-headers does not contain a Git repository
