@@ -1,3 +1,3 @@
 PACKAGE_URL=http://wayland.freedesktop.org/releases/weston-1.5.0.tar.xz
 
-CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --disable-setuid-install --disable-documentation --disable-xkbcommon --disable-xwayland --disable-x11-compositor --disable-drm-compositor --disable-wayland-compositor --disable-rpi-compositor --disable-libunwind --disable-clients WESTON_NATIVE_BACKEND="fbdev.so"
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --disable-setuid-install --disable-xwayland --disable-x11-compositor --disable-drm-compositor --disable-wayland-compositor --disable-rpi-compositor --disable-libunwind WESTON_NATIVE_BACKEND="fbdev-backend.so"

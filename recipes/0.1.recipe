@@ -56,6 +56,7 @@ libmtdev/1.1.5
 libnfc/1.7.1
 libtool/2.4.4
 libxkbcommon/0.5.0
+xkeyboard-config/2.11
 libnl/3.2.25
 openssl/1.0.1j
 openssh/6.7
@@ -89,6 +90,6 @@ libhybris/git
 pixman/0.32.6
 weston/1.5.0
 cairo/1.12.18
-efl/git host
-efl/git
+efl/1.12.2 host
+efl/1.12.2
 strip-script/1.0
