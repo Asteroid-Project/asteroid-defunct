@@ -1,1 +1,33 @@
-SCRIPT=#
+SCRIPT=bash -c 'shopt -s extglob && mkdir -p 1.0 && cd 1.0
+
+ # Clone needed repositories (most of them are dependencies)
+ DL_LIST="abi/cpp bionic/ build/ device/generic/goldfish external/clang external/compiler-rt external/expat external/freetype
+    external/gcc-demangle external/giflib external/gtest external/harfbuzz external/harfbuzz_ng external/icu4c external/jpeg
+    external/llvm external/liblzf external/libnfc-nci external/libnfc-nxp external/libpng external/libselinux external/openssl
+    external/protobuf external/sfntly external/skia external/speex external/sqlite external/sonivox external/stlport
+    external/tinyalsa external/webp external/wpa_supplicant_8 external/zlib libnativehelper frameworks/native frameworks/av
+    frameworks/base frameworks/opt/emoji frameworks/rs frameworks/compile/libbcc hardware/libhardware hardware/libhardware_legacy
+    prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.7 system/core system/extras system/media"
+ for PKG in $DL_LIST; do
+   [ ! -d $PKG ] && git clone -b kitkat-release --depth 1 https://android.googlesource.com/platform/${PKG} ${PKG}
+ done
+
+ # Remove the remaining java references and problematic tests
+ rm -rf frameworks/native/opengl/tests/{gl2_cameraeye,gl_perfapp,testLatency,testViewport} system/media/camera/tests bionic/tests \
+    bionic/linker/tests hardware/libhardware/tests frameworks/base/!(core|include|libs) frameworks/base/core/!(jni) frameworks/rs/java
+ sed -i "/ifneq (\$(shell java -version 2/,+42d" build/core/main.mk
+ sed -i "/LOCAL_SDK_VERSION/d" external/expat/Android.mk external/zlib/Android.mk external/protobuf/Android.mk
+ sed -i -e "/JAVA_LITE_SRC_FILES :=/,+12d" -e "/Java nano library (for/,/C++ lite library/d" -e "/To test java proto/d" external/protobuf/Android.mk
+ grep -q -e "include external/stlport/libstlport.mk" external/protobuf/Android.mk || sed -i "134i\include external/stlport/libstlport.mk" external/protobuf/Android.mk
+ 
+ # Compilation of the needed libs and drivers. Bionic is compiled two time because of the libhybris patch
+ source build/envsetup.sh
+ mmma bionic hardware/{libhardware,libhardware_legacy} frameworks/native/opengl/libs external/{libnfc-nxp,libnfc-nci} system/core/init \
+    device/generic/goldfish/{audio,camera,gps,lights,libqemu,opengl,power,qemu-props,qemud,sensors}
+ patch -d bionic -p1 < ../../bionic-hybris-kitkat.patch
+ mmma bionic
+ 
+ # Installation
+ mkdir -p %ROOTDIR_DIR%/system/bin
+ cp -r out/target/product/generic/system/* %ROOTDIR_DIR%/system
+ cp out/target/product/generic/root/init %ROOTDIR_DIR%/system/bin'

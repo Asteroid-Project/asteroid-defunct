@@ -1,6 +1,0 @@
-# /!\ Warning /!\
-# This script is not supposed to be kept on the long term
-# The lib folder was extracted from a prebuilt Android emulator image
-# In the future those libs must be rebuilt by Asteroid
-
-SCRIPT=cp -r system %ROOTDIR_DIR%
