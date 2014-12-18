@@ -1,15 +1,9 @@
 SCRIPT=\
+    export BUILD_DIR=$PWD
     cd %ROOTDIR_DIR%
     mkdir -p asteroid/bin asteroid/etc asteroid/include asteroid/lib asteroid/libexec asteroid/sbin asteroid/share asteroid/var users/root dev proc sys
     ln -sf asteroid/etc etc
     ln -sf asteroid/lib lib
     ln -sf asteroid/bin bin
-    echo root::0:0:root:/users/root:/asteroid/bin/bash > etc/passwd
-    echo asteroid > asteroid/etc/hostname
-    echo 127.0.0.1  localhost > asteroid/etc/hosts
-    echo 127.0.0.1  asteroid >> asteroid/etc/hosts
-    echo \#!/asteroid/bin/bash > asteroid/bin/init
-    echo export PATH=/asteroid/bin:/asteroid/sbin:/sbin >> asteroid/bin/init
-    echo export PS1=\"\\\\u@\\h:\\W\\\\\\$ \" >> asteroid/bin/init
-    echo /asteroid/sbin/agetty -n -l /asteroid/bin/bash 9600 ttyS2 >> asteroid/bin/init
-    chmod +x asteroid/bin/init
+    cp $BUILD_DIR/etc-1.0/* etc/
+    cp $BUILD_DIR/bin-1.0/* bin/

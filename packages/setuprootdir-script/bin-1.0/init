@@ -1,0 +1,4 @@
+#!/asteroid/bin/bash
+export PATH=/asteroid/bin:/asteroid/sbin
+export PS1="\u@\h:\W\\$ "
+/asteroid/sbin/agetty -n -l /asteroid/bin/bash 9600 ttyS2
