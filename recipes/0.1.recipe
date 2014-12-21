@@ -88,8 +88,8 @@ fontconfig/2.11.1
 libwayland/1.5.0
 libhybris/git
 pixman/0.32.6
-weston/1.5.0
 cairo/1.12.18
+weston/1.5.0
 efl/1.12.2 host
 efl/1.12.2
 strip-script/1.0
