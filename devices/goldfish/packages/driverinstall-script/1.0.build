@@ -1,7 +1,7 @@
 SCRIPT=bash -c 'shopt -s extglob && mkdir -p 1.0 && cd 1.0
 
  # Clone needed repositories (most of them are dependencies)
- DL_LIST="abi/cpp bionic/ build/ device/generic/goldfish external/clang external/compiler-rt external/expat external/freetype
+ DL_LIST="abi/cpp bionic/ build/ external/clang external/compiler-rt external/expat external/freetype
     external/gcc-demangle external/giflib external/gtest external/harfbuzz external/harfbuzz_ng external/icu4c external/jpeg
     external/llvm external/liblzf external/libnfc-nci external/libnfc-nxp external/libpng external/libselinux external/openssl
     external/protobuf external/sfntly external/skia external/speex external/sqlite external/sonivox external/stlport
@@ -11,6 +11,7 @@ SCRIPT=bash -c 'shopt -s extglob && mkdir -p 1.0 && cd 1.0
  for PKG in $DL_LIST; do
    [ ! -d $PKG ] && git clone -b kitkat-release --depth 1 https://android.googlesource.com/platform/${PKG} ${PKG}
  done
+   [ ! -d device/generic/goldfish ] && git clone -b kitkat-release --depth 1 https://android.googlesource.com/device/generic/goldfish device/generic/goldfish
 
  # Remove the remaining java references and problematic tests
  rm -rf frameworks/native/opengl/tests/{gl2_cameraeye,gl_perfapp,testLatency,testViewport} system/media/camera/tests bionic/tests \
@@ -24,7 +25,7 @@ SCRIPT=bash -c 'shopt -s extglob && mkdir -p 1.0 && cd 1.0
  source build/envsetup.sh
  mmma bionic hardware/{libhardware,libhardware_legacy} frameworks/native/opengl/libs external/{libnfc-nxp,libnfc-nci} system/core/init \
     device/generic/goldfish/{audio,camera,gps,lights,libqemu,opengl,power,qemu-props,qemud,sensors}
- patch -d bionic -p1 < ../../bionic-hybris-kitkat.patch
+ patch -d bionic -p1 < ../bionic-hybris-kitkat.patch
  mmma bionic
  
  # Installation
