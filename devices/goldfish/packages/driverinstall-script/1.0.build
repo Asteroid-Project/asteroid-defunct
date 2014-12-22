@@ -6,8 +6,8 @@ SCRIPT=bash -c 'shopt -s extglob && mkdir -p 1.0 && cd 1.0
     external/llvm external/liblzf external/libnfc-nci external/libnfc-nxp external/libpng external/libselinux external/openssl
     external/protobuf external/sfntly external/skia external/speex external/sqlite external/sonivox external/stlport
     external/tinyalsa external/webp external/wpa_supplicant_8 external/zlib libnativehelper frameworks/native frameworks/av
-    frameworks/base frameworks/opt/emoji frameworks/rs frameworks/compile/libbcc hardware/libhardware hardware/libhardware_legacy
-    prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.7 system/core system/extras system/media"
+    frameworks/base frameworks/opt/emoji frameworks/rs frameworks/compile/libbcc frameworks/compile/slang hardware/libhardware
+    hardware/libhardware_legacy prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.7 system/core system/extras system/media"
  for PKG in $DL_LIST; do
    [ ! -d $PKG ] && git clone -b kitkat-release --depth 1 https://android.googlesource.com/platform/${PKG} ${PKG}
  done
