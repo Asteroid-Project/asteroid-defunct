@@ -3,4 +3,4 @@ SCRIPT= cd %RAMDISK_DIR%
 
  cd %OUTPUT_DIR%
  make_ext4fs -l 900M -b 4k root.img rootdir/
- tune2fs -c0 -i0 root.img
+ /sbin/tune2fs -c0 -i0 root.img
