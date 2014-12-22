@@ -71,7 +71,7 @@ alac/git
 fdk-aac/git
 libogg/1.3.2
 libvorbis/1.3.4
-flac/1.3.0
+flac/1.3.1
 libsndfile/1.0.25
 pulseaudio/5.0
 tinyalsa/git
@@ -85,11 +85,13 @@ libtiff/4.0.3
 libfribidi/0.19.6
 libfreetype2/2.5.4
 fontconfig/2.11.1
-libwayland/1.5.0
+libwayland/1.6.0
 libhybris/git
 pixman/0.32.6
 cairo/1.12.18
-weston/1.5.0
+libevdev/1.3
+libinput/0.7.0
+weston/1.6.0
 efl/1.12.2 host
 efl/1.12.2
 strip-script/1.0
