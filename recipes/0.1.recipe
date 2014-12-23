@@ -64,6 +64,7 @@ curl/7.39
 dhcpcd/6.6.4
 inetutils/1.9.2
 iproute2/3.17.0
+net-tools/git
 netcat/0.7.1
 wget/1.15
 wpa_supplicant/2.3
