@@ -1,0 +1,7 @@
+PACKAGE_URL=git://git.code.sf.net/p/net-tools/code
+
+CONFIGURE_COMMANDS=yes "" | make config
+
+BUILD_COMMANDS=CC=%TARGET%-gcc make
+
+INSTALL_COMMANDS=BASEDIR=%DESTDIR%/%PREFIX% make update
