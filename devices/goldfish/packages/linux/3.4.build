@@ -1,5 +1,5 @@
 PACKAGE_URL=https://android.googlesource.com/kernel/goldfish.git
-GIT_OPTIONS=-b android-goldfish-3.4 --depth 1
+GIT_OPTIONS=-b android-goldfish-3.4 --single-branch --depth 1
 
 CONFIGURE_COMMANDS=\
     cp ../config-3.4 arch/arm/configs/asteroid-goldfish_defconfig
