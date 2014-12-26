@@ -1,14 +1,10 @@
 PACKAGE_URL=https://github.com/libhybris/libhybris.git
 
 CONFIGURE_COMMANDS=cd hybris
- ./autogen.sh --with-android-headers=$PWD/../../android-headers/ --enable-wayland --with-default-egl-platform=wayland --enable-trace --enable-debug %CONFIGURE_OPTIONS% DESTDIR=%DESTDIR% LD=%TARGET%-ld
+ ./autogen.sh --with-android-headers=$PWD/../../android-headers/ --enable-wayland --with-default-egl-platform=wayland --enable-trace --enable-debug %CONFIGURE_OPTIONS% DESTDIR=%DESTDIR% CFLAGS=-Wl,--warn-unresolved-symbols
 
 BUILD_COMMANDS=cd hybris
- ln -s $PWD/hardware/.libs/libhardware.so.2 %DESTDIR%/%PREFIX%/lib/libhardware.so.2
- ln -s $PWD/common/.libs/libhybris-common.so.1 %DESTDIR%/%PREFIX%/lib/libhybris-common.so.1
  make %MAKE_OPTIONS%
- rm %DESTDIR%/%PREFIX%/lib/libhardware.so.2
- rm %DESTDIR%/%PREFIX%/lib/libhybris-common.so.1
 
 # Hey don't stare at me like that! Ok, I know... this is a crazily ugly hack but come on try to find something better!
 
