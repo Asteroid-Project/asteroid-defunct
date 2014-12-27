@@ -10,7 +10,7 @@ BUILD_COMMANDS=ARCH=arm CROSS_COMPILE=%TARGET%- make %MAKE_OPTIONS%
 INSTALL_COMMANDS=cp arch/arm/boot/zImage %OUTPUT_DIR%/kernel
 
 [headers]
-CONFIGURE_COMMANDS=
+CONFIGURE_COMMANDS=git checkout android-goldfish-3.4
 BUILD_COMMANDS=
 INSTALL_COMMANDS=\
     make mrproper
