@@ -1,7 +1,7 @@
 PACKAGE_URL=https://github.com/libhybris/libhybris.git
 
 CONFIGURE_COMMANDS=cd hybris
- ./autogen.sh --with-android-headers=$PWD/../../android-headers/ --enable-wayland --with-default-egl-platform=wayland --enable-trace --enable-debug %CONFIGURE_OPTIONS% DESTDIR=%DESTDIR% CFLAGS=-Wl,--warn-unresolved-symbols
+ ./autogen.sh --with-android-headers=$PWD/../../android-headers/ --enable-wayland --with-default-egl-platform=wayland --enable-trace --enable-debug %CONFIGURE_OPTIONS% DESTDIR=%DESTDIR% CFLAGS=-Wl,--warn-unresolved-symbols CXXFLAGS=-Wl,--warn-unresolved-symbols
 
 BUILD_COMMANDS=cd hybris
  make %MAKE_OPTIONS%
