@@ -6,7 +6,5 @@ CONFIGURE_COMMANDS=cd hybris
 BUILD_COMMANDS=cd hybris
  make %MAKE_OPTIONS%
 
-# Hey don't stare at me like that! Ok, I know... this is a crazily ugly hack but come on try to find something better!
-
 INSTALL_COMMANDS=cd hybris
  make install DESTDIR=%DESTDIR%

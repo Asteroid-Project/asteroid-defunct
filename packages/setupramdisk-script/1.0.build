@@ -1,6 +1,6 @@
 SCRIPT=\
     mkdir -p %RAMDISK_DIR%
     cp init-1.0 %RAMDISK_DIR%/init
-    cp bootsplash-1.0 %RAMDISK_DIR%/bootsplash
+    cp bootsplash-1.0.ppm %RAMDISK_DIR%/bootsplash.ppm
     cd %RAMDISK_DIR%
-    mkdir -p bin dev proc sys
+    mkdir -p bin dev proc sys mnt
