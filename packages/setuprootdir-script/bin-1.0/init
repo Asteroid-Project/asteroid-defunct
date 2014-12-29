@@ -1,4 +1,8 @@
 #!/asteroid/bin/bash
 export PATH=/asteroid/bin:/asteroid/sbin
 export PS1="\u@\h:\W\\$ "
+export HOME=/users/root
+export XDG_RUNTIME_DIR=`mktemp -d /tmp/rtime-XXX`
+chmod 0700 $XDG_RUNTIME_DIR
+weston --tty=2 &
 /asteroid/sbin/agetty -n -l /asteroid/bin/bash 9600 ttyS2
