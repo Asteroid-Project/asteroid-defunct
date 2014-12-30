@@ -1,0 +1,3 @@
+PACKAGE_URL=http://www.abisource.com/downloads/enchant/1.6.0/enchant-1.6.0.tar.gz
+
+CONFIGURE_COMMANDS=./autogen.sh %CONFIGURE_OPTIONS%
