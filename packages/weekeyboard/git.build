@@ -1,0 +1,4 @@
+PACKAGE_URL=https://github.com/etrunko/weekeyboard.git
+
+CONFIGURE_COMMANDS=./autogen.sh
+ ./configure %CONFIGURE_OPTIONS% --with-edje-cc=%HOSTTOOLS_DIR%/bin/edje_cc
