@@ -1,0 +1,22 @@
+PACKAGE_URL=http://download.icu-project.org/files/icu4c/54.1/icu4c-54_1-src.tgz
+
+CONFIGURE_COMMANDS=cd source
+ ./configure %CONFIGURE_OPTIONS% --with-cross-build=$PWD/../host-build CXXFLAGS=--std=c++0x
+
+BUILD_COMMANDS=cd source
+ make %MAKE_OPTIONS%
+
+INSTALL_COMMANDS=cd source
+ make install DESTDIR=%DESTDIR%
+
+[host]
+HOST_BUILD=true
+
+CONFIGURE_COMMANDS=mkdir -p host-build
+ cd host-build
+ ../source/configure %CONFIGURE_OPTIONS% CXXFLAGS=--std=c++0x
+
+BUILD_COMMANDS=cd host-build
+ make %MAKE_OPTIONS%
+
+INSTALL_COMMANDS=
