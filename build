@@ -282,8 +282,7 @@ def toggleHostBuild(toggle):
             del os.environ["CXXFLAGS"]
         if "LDFLAGS" in os.environ:
             del os.environ["LDFLAGS"]
-        if "PKG_CONFIG_PATH" in os.environ:
-            del os.environ["PKG_CONFIG_PATH"]
+        os.environ["PKG_CONFIG_PATH"] = buildRoot + "/output/rootdir/asteroid/share/pkgconfig"
         os.environ["PKG_CONFIG_LIBDIR"] = buildRoot + "/output/rootdir/asteroid/lib/pkgconfig"
         os.environ["PKG_CONFIG_SYSROOT_DIR"] = buildRoot + "/output/rootdir"
         buildVars["%CONFIGURE_OPTIONS%"] = "--prefix=/asteroid/ --host=" + options.target + " --with-sysroot=" + buildRoot + "/output/rootdir"
