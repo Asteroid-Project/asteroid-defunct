@@ -2,6 +2,7 @@ PACKAGE_URL=http://download.enlightenment.org/rel/libs/elementary/elementary-1.1
 
 CONFIGURE_COMMANDS=sed -i "s@DEPS_EOLIAN_FLAGS=\`\${PKG_CONFIG}@DEPS_EOLIAN_FLAGS=\`PKG_CONFIG_PATH=%HOSTTOOLS_DIR%/lib/pkgconfig \${PKG_CONFIG}@" configure.ac
  make clean
+ rm -rf src/lib/.libs
  autoreconf -fiv
  ./configure %CONFIGURE_OPTIONS% --with-eolian-cxx=%HOSTTOOLS_DIR%/bin/eolian_cxx --with-eolian-gen=%HOSTTOOLS_DIR%/bin/eolian_gen --with-edje-cc=%HOSTTOOLS_DIR%/bin/edje_cc --with-eet-eet=%HOSTTOOLS_DIR%/bin/eet --with-elementary-codegen=%HOSTTOOLS_DIR%/bin/elementary-codegen --with-elm-prefs-cc=%HOSTTOOLS_DIR%/bin/elm_prefs_cc --with-tests=none CFLAGS=-Wl,--warn-unresolved-symbols CXXFLAGS=-Wl,--warn-unresolved-symbols
 
