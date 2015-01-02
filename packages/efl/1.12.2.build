@@ -4,7 +4,8 @@ CONFIGURE_COMMANDS=sed -i "s/wayland-egl >= 9.2.0/wayland-egl >= 0.0.1/" m4/evas
  make clean
  rm -rf src/static_libs/*/.libs/
  autoreconf -fiv
- ./configure %CONFIGURE_OPTIONS% --enable-wayland --enable-egl --with-opengl=es --with-tests=none --with-x11=none --disable-image-loader-tiff --with-edje-cc=%HOSTTOOLS_DIR%/bin/edje_cc --with-eolian-gen=%HOSTTOOLS_DIR%/bin/eolian_gen --with-eolian-cxx=%HOSTTOOLS_DIR%/bin/eolian_cxx --with-elua=%HOSTTOOLS_DIR%/bin/elua CFLAGS=-Wl,--warn-unresolved-symbols CXXFLAGS=-Wl,--warn-unresolved-symbols
+ echo ac_cv_func_strlcpy=no > config.cache
+ ./configure %CONFIGURE_OPTIONS% --config-cache --enable-wayland --enable-egl --with-opengl=es --with-tests=none --with-x11=none --disable-image-loader-tiff --with-edje-cc=%HOSTTOOLS_DIR%/bin/edje_cc --with-eolian-gen=%HOSTTOOLS_DIR%/bin/eolian_gen --with-eolian-cxx=%HOSTTOOLS_DIR%/bin/eolian_cxx --with-elua=%HOSTTOOLS_DIR%/bin/elua CFLAGS=-Wl,--warn-unresolved-symbols LDFLAGS="-ldl -lrt" # CXXFLAGS=-Wl,--warn-unresolved-symbols
 
 # We are not using the real wayland-egl, just the libhybris's copy so the versions number aren't the same
 
