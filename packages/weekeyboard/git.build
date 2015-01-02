@@ -1,4 +1,9 @@
 PACKAGE_URL=https://github.com/etrunko/weekeyboard.git
 
-CONFIGURE_COMMANDS=./autogen.sh
- ./configure %CONFIGURE_OPTIONS% --with-edje-cc=%HOSTTOOLS_DIR%/bin/edje_cc
+CONFIGURE_COMMANDS=./autogen.sh %CONFIGURE_OPTIONS% --with-edje-cc=%HOSTTOOLS_DIR%/bin/edje_cc
+ wayland-scanner client-header  < protocol/input-method.xml > src/input-method-client-protocol.h
+ wayland-scanner code  < protocol/input-method.xml > src/input-method-protocol.c
+ wayland-scanner client-header  < protocol/text.xml > src/text-client-protocol.h
+ wayland-scanner code  < protocol/text.xml > src/text-protocol.c
+
+# We invoke wayland-scanner by hand in order to use the host one
