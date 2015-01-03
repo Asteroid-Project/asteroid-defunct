@@ -8,3 +8,5 @@ BUILD_COMMANDS= unset CFLAGS
  make HOST_CC="gcc -m32" CROSS=%TARGET%- 
 
 INSTALL_COMMANDS=make install DESTDIR=%DESTDIR% PREFIX=%PREFIX%
+ cd %DESTDIR%/%PREFIX%/lib
+ ln -s libluajit-5.1.so.2.0.3 libluajit-5.1.so.2
