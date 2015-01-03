@@ -5,4 +5,5 @@ export HOME=/users/root
 export XDG_RUNTIME_DIR=`mktemp -d /tmp/rtime-XXX`
 chmod 0700 $XDG_RUNTIME_DIR
 weston --tty=2 &
+gobohide -h /bin /dev /etc /lib /proc /sbin /sys /tmp /usr /var &
 /asteroid/sbin/agetty -n -l /asteroid/bin/bash 9600 ttyS2
