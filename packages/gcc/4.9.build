@@ -87,6 +87,7 @@ INSTALL_COMMANDS=\
     DIR=$(echo %PREFIX%/arm-linux-gnueabihf/lib | sed s/\\//\\\\\\//g)
     echo sed -i "s/$DIR/=\/asteroid\/lib/g" %PREFIX%/arm-linux-gnueabihf/lib/*.la %ROOTDIR_DIR%/asteroid/lib/*.la
     sed -i "s/$DIR/=\/asteroid\/lib/g" %PREFIX%/arm-linux-gnueabihf/lib/*.la %ROOTDIR_DIR%/asteroid/lib/*.la
+    sed -i "s@libdir='=/asteroid/lib'@libdir='/asteroid/lib'@" %ROOTDIR_DIR%/asteroid/lib/libstdc++.la %PREFIX%/arm-linux-gnueabihf/lib/libstdc++.la
 
 CLEAN_COMMANDS=\
     cd build-p2
