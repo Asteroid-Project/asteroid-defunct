@@ -1,0 +1,3 @@
+PACKAGE_URL=https://www.kernel.org/pub/linux/network/nfc/neard-0.15.tar.xz
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --disable-systemd
