@@ -2,5 +2,5 @@ SCRIPT= cd %RAMDISK_DIR%
  find . | cpio -o -H newc | gzip > ../ramdisk.img
 
  cd %OUTPUT_DIR%
- make_ext4fs -l 900M -b 4k root.img rootdir/
+ make_ext4fs -l 1100M -b 4k root.img rootdir/
  /sbin/tune2fs -c0 -i0 root.img
