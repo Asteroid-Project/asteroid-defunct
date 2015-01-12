@@ -20,6 +20,8 @@ SCRIPT=bash -c 'shopt -s extglob && mkdir -p 1.0 && cd 1.0
  sed -i "/LOCAL_SDK_VERSION/d" external/expat/Android.mk external/zlib/Android.mk external/protobuf/Android.mk
  sed -i -e "/JAVA_LITE_SRC_FILES :=/,+12d" -e "/Java nano library (for/,/C++ lite library/d" -e "/To test java proto/d" external/protobuf/Android.mk
  grep -q -e "include external/stlport/libstlport.mk" external/protobuf/Android.mk || sed -i "134i\include external/stlport/libstlport.mk" external/protobuf/Android.mk
+ sed -i "/You are using version \$(MAKE_VERSION) of make.)/,+4d" build/core/main.mk
+ sed -i "/error Error: could not find jdk tools.jar, please install JDK/,+1d" build/core/config.mk
  
  # Compilation of the needed libs and drivers. Bionic is compiled two time because of the libhybris patch
  source build/envsetup.sh
