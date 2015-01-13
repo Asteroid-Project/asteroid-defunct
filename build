@@ -76,7 +76,7 @@ def readlink(path):
 
 def printGeneralInfos():
     options.recipe = readlink("recipes/" + options.recipe + ".recipe")
-    options.device = readlink("devices/" + options.device)
+    options.device = readlink("devices/" + options.device).replace("devices/", "", 1)
     options.device_version = readlink("devices/" + options.device + "/" + options.device_version + ".recipe")
 
     info("==== Asteroid Build System ====")
