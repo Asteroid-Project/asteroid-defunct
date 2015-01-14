@@ -2,7 +2,7 @@
 export LD_LIBRARY_PATH=$PWD/output/hosttools/lib/:$LD_LIBRARY_PATH
 if [ `getconf LONG_BIT` = "64" ]
 then
-    output/hosttools/bin/emulator64-arm -show-kernel -kernel output/kernel -ramdisk output/ramdisk.img -system output/root.img -data /dev/null -sysdir output -no-cache -no-snapstorage -no-skin -gpu on -partition-size 900 -shell -qemu -cpu cortex-a8
+    output/hosttools/bin/emulator64-arm "$@" -show-kernel -kernel output/kernel -ramdisk output/ramdisk.img -system output/root.img -data /dev/null -sysdir output -no-cache -no-snapstorage -scale 1.0 -skin 600x900 -gpu off -partition-size 1100 -shell -qemu -cpu cortex-a8
 else
-    output/hosttools/bin/emulator-arm -show-kernel -kernel output/kernel -ramdisk output/ramdisk.img -system output/root.img -data /dev/null -sysdir output -no-cache -no-snapstorage -no-skin -gpu on -partition-size 900 -shell -qemu -cpu cortex-a8
+    output/hosttools/bin/emulator-arm "$@" -show-kernel -kernel output/kernel -ramdisk output/ramdisk.img -system output/root.img -data /dev/null -sysdir output -no-cache -no-snapstorage -scale 1.0 -skin 600x900 -gpu off -partition-size 1100 -shell -qemu -cpu cortex-a8
 fi
