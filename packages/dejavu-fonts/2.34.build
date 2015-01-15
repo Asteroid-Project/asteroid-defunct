@@ -1,0 +1,7 @@
+PACKAGE_URL=http://sourceforge.net/projects/dejavu/files/dejavu/2.34/dejavu-fonts-ttf-2.34.tar.bz2
+
+CONFIGURE_COMMANDS=
+BUILD_COMMANDS=
+INSTALL_COMMANDS=cp -r fontconfig/* %DESTDIR%/%PREFIX%/share/fontconfig/
+ mkdir -p %DESTDIR%/%PREFIX%/share/fonts/truetype
+ cp -r ttf/* %DESTDIR%/%PREFIX%/share/fonts/truetype
