@@ -1,0 +1,3 @@
+PACKAGE_URL=http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.102.tar.gz
+
+CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --with-dbus-binding-tool=dbus-binding-tool
