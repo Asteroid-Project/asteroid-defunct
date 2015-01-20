@@ -4,6 +4,13 @@ export PS1="\u@\h:\W\\$ "
 export HOME=/users/root
 export XDG_RUNTIME_DIR=`mktemp -d /tmp/rtime-XXX`
 chmod 0700 $XDG_RUNTIME_DIR
-weston --tty=2 &
+dbus-uuidgen --ensure
+dbus-daemon --system &
+eval `dbus-launch`
+export DBUS_SESSION_BUS_ADDRESS
+export XDG_DATA_DIRS=/asteroid/share/
+fc-cache
+upower &
+weston --tty=2 &> /asteroid/var/weston_logs & 
 gobohide -h /bin /dev /etc /lib /proc /sbin /sys /tmp /usr /var &
 /asteroid/sbin/agetty -n -l /asteroid/bin/bash 9600 ttyS2
