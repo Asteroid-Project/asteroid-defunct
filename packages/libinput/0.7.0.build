@@ -1,1 +1,4 @@
 PACKAGE_URL=http://www.freedesktop.org/software/libinput/libinput-0.7.0.tar.xz
+
+CONFIGURE_COMMANDS=patch src/evdev.c -i ../goldfish-touch.patch # That patch is ugly as hell we must really get rid of it asap
+ ./configure %CONFIGURE_OPTIONS%

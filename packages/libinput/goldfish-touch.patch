@@ -1,0 +1,20 @@
+--- a/src/evdev.c	2014-12-05 04:40:39.000000000 +0100
++++ b/src/evdev.c	2015-01-01 19:34:06.118358573 +0100
+@@ -1425,7 +1425,7 @@
+ 		if (evdev_device_init_pointer_acceleration(device) == -1)
+ 			return -1;
+ 
+-		device->seat_caps |= EVDEV_DEVICE_POINTER;
++//		device->seat_caps |= EVDEV_DEVICE_POINTER;
+ 
+ 		log_info(libinput,
+ 			 "input device '%s', %s is a pointer caps =%s%s%s\n",
+@@ -1451,7 +1451,7 @@
+ 			 "input device '%s', %s is a keyboard\n",
+ 			 device->devname, devnode);
+ 	}
+-	if (has_touch && !has_button) {
++	if (has_touch) {
+ 		device->seat_caps |= EVDEV_DEVICE_TOUCH;
+ 		log_info(libinput,
+ 			 "input device '%s', %s is a touch device\n",
