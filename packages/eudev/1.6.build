@@ -1,1 +1,5 @@
 PACKAGE_URL=http://dev.gentoo.org/~blueness/eudev/eudev-1.6.tar.gz
+
+INSTALL_COMMANDS=make install DESTDIR=%DESTDIR%
+ mkdir -p %DESTDIR%/%PREFIX%/var/run/udev
+
