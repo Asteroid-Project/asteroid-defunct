@@ -1,3 +1,6 @@
 PACKAGE_URL=http://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-5.0.tar.xz
 
 CONFIGURE_COMMANDS=./configure %CONFIGURE_OPTIONS% --without-caps --with-sysroot=%DESTDIR%
+
+INSTALL_COMMANDS=make install DESTDIR=%DESTDIR%
+ mkdir -p %DESTDIR%/%PREFIX%/var/run/pulse
