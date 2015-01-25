@@ -29,6 +29,7 @@ man-db/2.7.1
 sed/4.2.1
 bash/4.3
 python/3.4.2
+gdb/7.8.2
 libffi/3.1
 glib/2.42.1
 dbus-glib/0.102
@@ -109,9 +110,7 @@ weston/1.6.0
 efl/1.12.2 host
 efl/1.12.2
 e_dbus/1.7.10
-geoclue/2.1.10
 elementary/1.12.2 host
 elementary/1.12.2
 weekeyboard/git
-webkit/r174650
 strip-script/1.0
