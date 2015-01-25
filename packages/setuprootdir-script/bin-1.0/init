@@ -3,14 +3,23 @@ export PATH=/asteroid/bin:/asteroid/sbin
 export PS1="\u@\h:\W\\$ "
 export HOME=/users/root
 export XDG_RUNTIME_DIR=`mktemp -d /tmp/rtime-XXX`
+export XDG_DATA_DIRS=/asteroid/share/
+
+chmod 777 /tmp/
 chmod 0700 $XDG_RUNTIME_DIR
-dbus-uuidgen --ensure
+
+udevd &
+fc-cache # We should really find a way to do that at ./build time... it takes around 99% of the boot time
+dbus-uuidgen --ensure &
 dbus-daemon --system &
 eval `dbus-launch`
 export DBUS_SESSION_BUS_ADDRESS
-export XDG_DATA_DIRS=/asteroid/share/
-fc-cache
 upower &
+/asteroid/libexec/bluetooth/bluetoothd &
+/asteroid/libexec/nfc/neard &
+ofonod &
+connmand &
+pulseaudio --system &
 weston --tty=2 &> /asteroid/var/weston_logs & 
-gobohide -h /bin /dev /etc /lib /proc /sbin /sys /tmp /usr /var &
+gobohide -h /bin /dev /etc /lib /proc /run /sbin /sys /tmp /usr /var &
 /asteroid/sbin/agetty -n -l /asteroid/bin/bash 9600 ttyS2
