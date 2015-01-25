@@ -1,9 +1,10 @@
 SCRIPT=\
     export BUILD_DIR=$PWD
     cd %ROOTDIR_DIR%
-    mkdir -p asteroid/bin asteroid/etc asteroid/include asteroid/lib asteroid/libexec asteroid/sbin asteroid/share asteroid/var users/root tmp dev proc sys
+    mkdir -p asteroid/bin asteroid/etc asteroid/include asteroid/lib asteroid/libexec asteroid/sbin asteroid/share asteroid/var users/root tmp dev proc sys run
     ln -sf asteroid/etc etc
     ln -sf asteroid/lib lib
     ln -sf asteroid/bin bin
+    ln -sf asteroid/var/run run
     cp -r $BUILD_DIR/etc-1.0/* etc/
     cp -r $BUILD_DIR/bin-1.0/* bin/
