@@ -32,11 +32,11 @@ python/3.4.2
 gdb/7.8.2
 libffi/3.1
 glib/2.42.1
-dbus-glib/0.102
 libexpat/2.1
 libxml2/2.9.2
 libxslt/git-snapshot
 dbus/1.8.12
+dbus-glib/0.102
 eudev/1.6
 dosfstools/3.0.26
 e2fsprogs/1.42.12
@@ -82,6 +82,7 @@ libsndfile/1.0.25
 pulseaudio/5.0
 gstreamer/1.4.4
 gst-plug-base/1.4.4
+libcamberra/0.30
 mobile-broadband-provider-info/git
 bluez/5.25
 neard/0.15
@@ -112,5 +113,12 @@ efl/1.12.2
 e_dbus/1.7.10
 elementary/1.12.2 host
 elementary/1.12.2
+geneet/git
+etrophy/git
 weekeyboard/git
+econnman/git
+efbb/git
+ephoto/git
+equate/git
+rage/git
 strip-script/1.0
