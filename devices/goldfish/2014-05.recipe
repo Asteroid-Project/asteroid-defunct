@@ -1,7 +1,7 @@
 linux/3.4 headers
 Asteroid
 linux/3.4
-driverinstall-script/1.0
+driverinstall-script/kitkat
 qemu/git
 ext4_utils/2014-05
 mkimgs-script/1.0

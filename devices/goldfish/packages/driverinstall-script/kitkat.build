@@ -1,4 +1,4 @@
-SCRIPT=bash -c 'shopt -s extglob && mkdir -p 1.0 && cd 1.0
+SCRIPT=bash -c 'shopt -s extglob && mkdir -p kitkat && cd kitkat
 
  # Clone needed repositories (most of them are dependencies)
  DL_LIST="abi/cpp bionic/ build/ external/clang external/compiler-rt external/expat external/freetype
