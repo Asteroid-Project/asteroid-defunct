@@ -1,0 +1,3 @@
+PACKAGE_URL=git://git.enlightenment.org/apps/eve.git
+
+CONFIGURE_COMMANDS=./autogen.sh %CONFIGURE_OPTIONS%
