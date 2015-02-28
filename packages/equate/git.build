@@ -1,0 +1,3 @@
+PACKAGE_URL=git://git.enlightenment.org/apps/equate.git
+
+CONFIGURE_COMMANDS=./autogen.sh %CONFIGURE_OPTIONS% --with-edje-cc=%HOSTTOOLS_DIR%/bin/edje_cc
