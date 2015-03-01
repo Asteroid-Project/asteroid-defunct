@@ -1,0 +1,6 @@
+PACKAGE_URL=git://git.enlightenment.org/tools/geneet.git
+
+CONFIGURE_COMMANDS=
+BUILD_COMMANDS=
+INSTALL_COMMANDS=cp geneet.py %HOSTTOOLS_DIR%/bin
+ cp geneet.py %DESTDIR%/%PREFIX%/bin/
